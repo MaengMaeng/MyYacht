@@ -12,6 +12,7 @@ const Tabs = createBottomTabNavigator();
 export default function () {
   return (
     <Tabs.Navigator
+      initialRouteName="Home"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size }) => {
           let iconName = Platform.OS === "ios" ? "ios-" : "md-";
