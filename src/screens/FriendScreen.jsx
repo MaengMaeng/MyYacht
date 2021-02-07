@@ -8,29 +8,37 @@ import {
 } from "react-native";
 const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
 export default function () {
-  const [isToggled, setIsToggled] = useState(false);
+  const [isReqSelected, setIsReqSelected] = useState(false);
 
   const onClickLeftTab = () => {
-    setIsToggled(false);
+    setIsReqSelected(false);
   };
   const onClickRightTab = () => {
-    setIsToggled(true);
+    setIsReqSelected(true);
   };
   return (
     <View style={styles.container}>
       <View style={styles.tabContainer}>
         <TouchableOpacity onPress={onClickLeftTab}>
-          <View style={styles.buttonContainer}>
+          <View
+            style={
+              isReqSelected ? styles.buttonContainer : styles.selectedButton
+            }
+          >
             <Text>목록</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity onPress={onClickRightTab}>
-          <View style={styles.buttonContainer}>
+          <View
+            style={
+              isReqSelected ? styles.selectedButton : styles.buttonContainer
+            }
+          >
             <Text>신청</Text>
           </View>
         </TouchableOpacity>
       </View>
-      {isToggled ? <FriendRequsetList /> : <FriendList />}
+      {isReqSelected ? <FriendRequsetList /> : <FriendList />}
     </View>
   );
 }
@@ -38,7 +46,7 @@ export default function () {
 const FriendList = () => {
   return (
     <View style={styles.listContainer}>
-      <Text> Friend List </Text>
+      <Text> Friendsas List </Text>
     </View>
   );
 };
@@ -58,19 +66,29 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   tabContainer: {
-    top: 1,
+    alignItems: "center",
+    justifyContent: "center",
     flexDirection: "row",
+    marginVertical: 10,
   },
   buttonContainer: {
-    margin: 10,
+    // marginHorizontal: 10,
     padding: 5,
-    borderWidth: 1,
-    borderColor: "black",
+    paddingHorizontal: 50,
+    backgroundColor: "white",
+    opacity: 0.5,
+  },
+  selectedButton: {
+    // marginHorizontal: 10,
+    padding: 5,
+    paddingHorizontal: 50,
+    borderBottomColor: "black",
+    borderBottomWidth: 4,
+    backgroundColor: "white",
   },
   listContainer: {
     marginHorizontal: 10,
     height: HEIGHT * (2 / 3),
-    borderWidth: 1,
-    borderColor: "black",
+    backgroundColor: "white",
   },
 });
