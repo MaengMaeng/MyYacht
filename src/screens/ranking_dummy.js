@@ -1,82 +1,130 @@
 export const TOTAL_RANKING = [
     {
-        nickname: '1등',
+        nickname: '더미_1',
         uid: '1234'
     },
     {
-        nickname: '2등',
+        nickname: '더미_2',
         uid: '3124'
     },
     {
-        nickname: '3등',
+        nickname: '더미_3',
         uid: '1123'
     },
     {
-        nickname: '4등',
+        nickname: '더미_4',
         uid: '3645'
     },
     {
-        nickname: '5등',
+        nickname: '더미_5',
         uid: '321354'
     },
     {
-        nickname: '6등',
+        nickname: '더미_6',
         uid: '648'
     },
     {
-        nickname: '7등',
+        nickname: '더미_7',
         uid: '78612'
     },
     {
-        nickname: '8등',
+        nickname: '더미_8',
         uid: '708'
+    },
+    {
+        nickname: '더미_9',
+        uid: '1234'
+    },
+    {
+        nickname: '더미_10',
+        uid: '3124'
+    },
+    {
+        nickname: '더미_11',
+        uid: '1123'
+    },
+    {
+        nickname: '더미_12',
+        uid: '3645'
+    },
+    {
+        nickname: '더미_13',
+        uid: '321354'
+    },
+    {
+        nickname: '더미_14',
+        uid: '648'
+    },
+    {
+        nickname: '더미_15',
+        uid: '78612'
+    },
+    {
+        nickname: '더미_16',
+        uid: '708'
+    },
+    {
+        nickname: '더미_17',
+        uid: '463120'
+    },
+    {
+        nickname: '더미_18',
+        uid: '645315'
     },
 ];
 
 export const MY_TOTAL_RANKING = {
-    rank: 123,
-    nickname: '내 등수',
+    rank: 121233,
+    nickname: '내닉네임',
     uid: '8664654'
 };
 
 
 export const FRIENDS_RANKING = [
     {
-        nickname: '친구 중 1등',
+        nickname: '더미_9',
         uid: '1234'
     },
     {
-        nickname: '친구 중 2등',
+        nickname: '더미_10',
         uid: '3124'
     },
     {
-        nickname: '친구 중 3등',
+        nickname: '더미_11',
         uid: '1123'
     },
     {
-        nickname: '친구 중 4등',
+        nickname: '더미_12',
         uid: '3645'
     },
     {
-        nickname: '5등',
+        nickname: '더미_13',
         uid: '321354'
     },
     {
-        nickname: '친구 중 6등',
+        nickname: '더미_14',
         uid: '648'
     },
     {
-        nickname: '7등',
+        nickname: '더미_15',
         uid: '78612'
     },
     {
-        nickname: '친구 중 8등',
+        nickname: '더미_16',
         uid: '708'
+    },
+    {
+        nickname: '더미_17',
+        uid: '463120'
+    },
+    {
+        nickname: '더미_18',
+        uid: '645315'
     },
 ];
 
 export const MY_FRIENDS_RANKING = {
     rank: 456,
-    nickname: '내 등수',
+    nickname: '내닉네임',
     uid: '8664654'
 };
