@@ -1,45 +1,9 @@
 import React from "react";
-import { useState, useEffect } from "react";
 import styled from 'styled-components/native';
 
 import { Text } from "react-native";
-import { TOTAL_RANKING, MY_TOTAL_RANKING, FRIENDS_RANKING, MY_FRIENDS_RANKING } from './ranking_dummy';
 
-export default function () {
-  const [tab, setTab] = useState(0);
-  const [ranklist, setRanklist] = useState([]);
-  const defaultMyRank = {
-    rank: 0,
-    nickname: '-',
-    uid: 0
-  }
-  
-  const [myRank, setMyRank] = useState(defaultMyRank);
-
-  useEffect(() => {
-    if (tab === 0) {
-      setRanklist(TOTAL_RANKING);
-      setMyRank(MY_TOTAL_RANKING);
-    }
-    else {
-      setRanklist(FRIENDS_RANKING);
-      setMyRank(MY_FRIENDS_RANKING);
-    }
-  }, []);
-
-  const changeTab = () => {
-    if (tab) {
-      setRanklist(TOTAL_RANKING);
-      setMyRank(MY_TOTAL_RANKING);
-      setTab(0);
-    }
-    else {
-      setRanklist(FRIENDS_RANKING);
-      setMyRank(MY_FRIENDS_RANKING);
-      setTab(1);
-    }
-  }
-
+export const RankingScreen = ({tab, myRank, ranklist, changeTab}) => {
   const rankParser = ['1st', '2nd', '3rd'];
 
   const userInfo = (rank, nickname, uid) => {
@@ -64,9 +28,9 @@ export default function () {
     )
   }
 
-  if (tab === 0) {
-    return (
-      <>
+  return (
+    <>
+      {tab === 0 ? (
         <Container direction='row'>
           <TabButton selected={true}>
             <TabText selected={true}>전체 랭킹</TabText>
@@ -76,48 +40,31 @@ export default function () {
             <TabText>친구 랭킹</TabText>
           </TabButton>
         </Container>
-        <RankingListView>
-          {
-            ranklist.map((v, i) => userInfo(i, v.nickname, v.uid))
-          }
-        </RankingListView>
-        <Container direction='column'>
-          <DividerView>
-            <Text>내 랭킹</Text>
-            <DividerLineView/>
-          </DividerView>
-          {userInfo(myRank.rank, myRank.nickname, myRank.uid)}
-        </Container>
-      </>
-    )
-  }
-  else {
-    return (
-      <>
-        <Container direction='row'>
-          <TabButton onPress={changeTab}>
-            <TabText>전체 랭킹</TabText>
-          </TabButton>
+      ) : (
+          <Container direction='row'>
+            <TabButton onPress={changeTab}>
+              <TabText>전체 랭킹</TabText>
+            </TabButton>
 
-          <TabButton selected={true}>
-            <TabText selected={true}>친구 랭킹</TabText>
-          </TabButton>
-        </Container>
-        <RankingListView>
-          {
-            ranklist.map((v, i) => userInfo(i, v.nickname, v.uid))
-          }
-        </RankingListView>
-        <Container direction='column'>
-          <DividerView>
-            <Text>내 랭킹</Text>
-            <DividerLineView/>
-          </DividerView>
-          {userInfo(myRank.rank, myRank.nickname, myRank.uid)}
-        </Container>
-      </>
-    );
-  }
+            <TabButton selected={true}>
+              <TabText selected={true}>친구 랭킹</TabText>
+            </TabButton>
+          </Container>
+        )}
+      <RankingListView>
+        {
+          ranklist.map((v, i) => userInfo(i, v.nickname, v.uid))
+        }
+      </RankingListView>
+      <Container direction='column'>
+        <DividerView>
+          <Text>내 랭킹</Text>
+          <DividerLineView />
+        </DividerView>
+        {userInfo(myRank.rank, myRank.nickname, myRank.uid)}
+      </Container>
+    </>
+  );
 }
 
 const Container = styled.View`
