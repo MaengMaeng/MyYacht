@@ -1,36 +1,39 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { View, ScrollView, Text, StyleSheet, TouchableOpacity } from "react-native";
-import {TOTAL_RANKING, MY_TOTAL_RANKING, FRIENDS_RANKING, MY_FRIENDS_RANKING} from './ranking_dummy';
+import styled from 'styled-components/native';
+
+import { Text } from "react-native";
+import { TOTAL_RANKING, MY_TOTAL_RANKING, FRIENDS_RANKING, MY_FRIENDS_RANKING } from './ranking_dummy';
 
 export default function () {
   const [tab, setTab] = useState(0);
-  const [ranklist , setRanklist] = useState([]);
+  const [ranklist, setRanklist] = useState([]);
   const defaultMyRank = {
-    rank:0,
-    nickname:'-',
-    uid:0
+    rank: 0,
+    nickname: '-',
+    uid: 0
   }
-  const [myRank , setMyRank] = useState(defaultMyRank);
+  
+  const [myRank, setMyRank] = useState(defaultMyRank);
 
   useEffect(() => {
-    if(tab === 0){
+    if (tab === 0) {
       setRanklist(TOTAL_RANKING);
       setMyRank(MY_TOTAL_RANKING);
     }
-    else{
+    else {
       setRanklist(FRIENDS_RANKING);
       setMyRank(MY_FRIENDS_RANKING);
     }
   }, []);
 
   const changeTab = () => {
-    if(tab){
+    if (tab) {
       setRanklist(TOTAL_RANKING);
       setMyRank(MY_TOTAL_RANKING);
       setTab(0);
     }
-    else{
+    else {
       setRanklist(FRIENDS_RANKING);
       setMyRank(MY_FRIENDS_RANKING);
       setTab(1);
@@ -40,174 +43,155 @@ export default function () {
   const rankParser = ['1st', '2nd', '3rd'];
 
   const userInfo = (rank, nickname, uid) => {
-    const parsingRank = rankParser[rank] ? rankParser[rank] : `${rank + 1}th`;  
+    const parsingRank = rankParser[rank] ? rankParser[rank] : `${rank + 1}th`;
 
     return (
-        <View key={`userInfo_${rank}`} style={styles.userInfo}>
-          <View style={styles.userRankView}>
-            <Text style={styles.userRankText}>
-              {parsingRank}
-            </Text>
-          </View>
-          <View style={styles.userNicknameUidView}>
-            <Text style={styles.userNicknameText}>
-              {nickname}
-            </Text>
-            <Text style={styles.userUidText}>
-              #{uid}
-            </Text>
-          </View>
-        </View>
+      <RankingElementView key={`userInfo_${rank}`}>
+        <RankView>
+          <RankText>
+            {parsingRank}
+          </RankText>
+        </RankView>
+        <NicknameUidView>
+          <NicknameText>
+            {nickname}
+          </NicknameText>
+          <UidText>
+            #{uid}
+          </UidText>
+        </NicknameUidView>
+      </RankingElementView>
     )
   }
 
-  const myInfo = (rank, nickname, uid) => {
-    return (
-      <View style={styles.myInfo}>
-        <View style={styles.divider}>
-          <Text>내 랭킹</Text>
-          <View style={styles.line}></View>
-        </View>
-        <View style={styles.divider}>
-          {userInfo(rank, nickname, uid)}
-        </View>
-      </View>
-    )
-  }
-
-  if(tab === 0){
+  if (tab === 0) {
     return (
       <>
-        <View style={styles.container}>
-            <TouchableOpacity style={[styles.tabButton, styles.selected]}>
-              <Text style={styles.selected}>전체 랭킹</Text>
-            </TouchableOpacity>
+        <Container direction='row'>
+          <TabButton selected={true}>
+            <TabText selected={true}>전체 랭킹</TabText>
+          </TabButton>
 
-            <TouchableOpacity style={[styles.tabButton, styles.notSeleted]} onPress={changeTab}>
-              <Text style={styles.notSeleted}>친구 랭킹</Text>
-            </TouchableOpacity>
-        </View>
-        <ScrollView style={styles.list}>
+          <TabButton onPress={changeTab}>
+            <TabText>친구 랭킹</TabText>
+          </TabButton>
+        </Container>
+        <RankingListView>
           {
             ranklist.map((v, i) => userInfo(i, v.nickname, v.uid))
           }
-        </ScrollView>
-        {myInfo(myRank.rank, myRank.nickname, myRank.uid)}
+        </RankingListView>
+        <Container direction='column'>
+          <DividerView>
+            <Text>내 랭킹</Text>
+            <DividerLineView/>
+          </DividerView>
+          {userInfo(myRank.rank, myRank.nickname, myRank.uid)}
+        </Container>
       </>
     )
   }
-  else{
+  else {
     return (
       <>
-        <View style={styles.container}>
-            <TouchableOpacity style={[styles.tabButton, styles.notSeleted]} onPress={changeTab}>
-              <Text style={styles.notSeleted}>전체 랭킹</Text>
-            </TouchableOpacity>
+        <Container direction='row'>
+          <TabButton onPress={changeTab}>
+            <TabText>전체 랭킹</TabText>
+          </TabButton>
 
-            <TouchableOpacity style={[styles.tabButton, styles.selected]}>
-              <Text style={styles.selected}>친구 랭킹</Text>
-            </TouchableOpacity>      
-          </View>
-          <ScrollView style={styles.list}>
-            {
-              ranklist.map((v, i) => userInfo(i, v.nickname, v.uid))
-            }
-          </ScrollView>
-          {myInfo(myRank.rank, myRank.nickname, myRank.uid)}
-        </>
+          <TabButton selected={true}>
+            <TabText selected={true}>친구 랭킹</TabText>
+          </TabButton>
+        </Container>
+        <RankingListView>
+          {
+            ranklist.map((v, i) => userInfo(i, v.nickname, v.uid))
+          }
+        </RankingListView>
+        <Container direction='column'>
+          <DividerView>
+            <Text>내 랭킹</Text>
+            <DividerLineView/>
+          </DividerView>
+          {userInfo(myRank.rank, myRank.nickname, myRank.uid)}
+        </Container>
+      </>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+const Container = styled.View`
+  flex: 1;
+  flex-direction: ${props => props.direction};
+  justify-content: center;
+  align-items: center;
+`;
 
-  tabButton:{
-    borderRadius: 5,
-    borderWidth: 2,
-    borderColor: 'black',
-    margin: 4,
-    padding: 4
-  },
+const TabButton = styled.TouchableOpacity`
+  border: 2px solid black;
+  border-radius: 5px;
+  margin: 4px;
+  padding: 4px;
 
-  selected: {
-    fontSize: 30,
-    backgroundColor: 'black',
-    color:'white'
-  },
+  background-color: ${props => props.selected ? 'black' : 'white'};
+`;
 
-  notSeleted:{
-    fontSize: 20 ,
-    backgroundColor: 'white',
-    color:'black'
-  },
+const TabText = styled.Text`
+  font-size: ${props => props.selected ? '30px' : '20px'};
+  color: ${props => props.selected ? 'white' : 'black'};
+`;
 
-  list:{
-    flex: 5,
-    flexGrow: 5,
-    flexDirection: 'column',
-    // justifyContent: 'center',
-    // alignItems: 'center',
-    backgroundColor: 'white',
-  },
+const RankingListView = styled.ScrollView`
+  flex: 5;
+  flex-grow: 5;
+  flex-direction: column;
+  background-color: white;
+`;
 
-  userInfo:{
-    flexDirection: 'row',
-  },
+const RankingElementView = styled.View`
+  flex-direction: row;
+`;
 
-  userRankView:{
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  userRankText:{
-    borderColor:'black',
-    borderRadius: 16,
-    borderWidth:2,
-    padding: 4,
-    margin: 4,
-    // width: 60,
-    textAlign:'center',
-  },
+const RankView = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+`;
 
-  userNicknameUidView:{
-    flexDirection: 'row',
-    flex: 2,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+const RankText = styled.Text`
+  border: 2px solid black;
+  border-radius: 16px;
+  padding: 4px;
+  margin: 4px;
+  text-align: center;
+`;
 
-  userNicknameText:{
-    fontSize:20,
-  },
+const NicknameUidView = styled.View`
+  flex: 2;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+`;
 
-  userUidText:{
-    fontSize:16,
-    color:'grey'
-  },
+const NicknameText = styled.Text`
+  font-size: 20px;
+`;
 
-  divider:{
-    flex:1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
+const UidText = styled.Text`
+  font-size: 16px;
+  color: grey;
+`;
 
-  myInfo:{
-    flex:1,
-    flexDirection: 'column',
-  },
+const DividerView = styled.View`
+  flex: 1;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+`;
 
-  line:{
-    borderTopColor: 'black',
-    borderBottomWidth: 2,
-    height:1,
-    width:300
-  }, 
+const DividerLineView = styled.View`
+  border: 1px solid black;
+  height: 1px;
+  width: 300px;
+`;
 
-});
