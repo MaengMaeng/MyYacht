@@ -5,7 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 import {RankingScreen} from "../screens/RankingScreen";
 import Home from "../screens/HomeScreen";
-import Friend from "../screens/FriendScreen";
+import Friends from "../screens/Friends";
 
 const Tabs = createBottomTabNavigator();
 
@@ -20,7 +20,7 @@ export default function () {
             iconName += "trophy";
           } else if (route.name === "Home") {
             iconName += "game-controller";
-          } else if (route.name === "Friend") {
+          } else if (route.name === "Friends") {
             iconName += "people";
           }
           return <Ionicons name={iconName} color={color} size={size} />;
@@ -33,7 +33,7 @@ export default function () {
     >
       <Tabs.Screen name="Ranking" component={RankingScreen} />
       <Tabs.Screen name="Home" component={Home} />
-      <Tabs.Screen name="Friend" component={Friend} />
+      <Tabs.Screen name="Friends" component={Friends} />
     </Tabs.Navigator>
   );
 }
