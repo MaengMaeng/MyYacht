@@ -5,7 +5,7 @@ import {
   AI_ICON,
   NORMAL_ICON,
   RANK_ICON,
-} from "../../assets/home";
+} from "../../../assets/home";
 
 export default function () {
   return (
