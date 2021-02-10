@@ -1,10 +1,10 @@
 import React from "react";
-import styled from 'styled-components/native';
+import styled from "styled-components/native";
 
 import { Text } from "react-native";
 
-export const RankingScreen = ({tab, myRank, ranklist, changeTab}) => {
-  const rankParser = ['1st', '2nd', '3rd'];
+export const RankingScreen = ({ tabNumber, myRank, ranklist, changeTab }) => {
+  const rankParser = ["1st", "2nd", "3rd"];
 
   const userInfo = (rank, nickname, uid) => {
     const parsingRank = rankParser[rank] ? rankParser[rank] : `${rank + 1}th`;
@@ -12,26 +12,20 @@ export const RankingScreen = ({tab, myRank, ranklist, changeTab}) => {
     return (
       <RankingElementView key={`userInfo_${rank}`}>
         <RankView>
-          <RankText>
-            {parsingRank}
-          </RankText>
+          <RankText>{parsingRank}</RankText>
         </RankView>
         <NicknameUidView>
-          <NicknameText>
-            {nickname}
-          </NicknameText>
-          <UidText>
-            #{uid}
-          </UidText>
+          <NicknameText>{nickname}</NicknameText>
+          <UidText>#{uid}</UidText>
         </NicknameUidView>
       </RankingElementView>
-    )
-  }
+    );
+  };
 
   return (
     <>
-      {tab === 0 ? (
-        <Container direction='row'>
+      {!tabNumber ? (
+        <Container direction="row">
           <TabButton selected={true}>
             <TabText selected={true}>전체 랭킹</TabText>
           </TabButton>
@@ -41,22 +35,20 @@ export const RankingScreen = ({tab, myRank, ranklist, changeTab}) => {
           </TabButton>
         </Container>
       ) : (
-          <Container direction='row'>
-            <TabButton onPress={changeTab}>
-              <TabText>전체 랭킹</TabText>
-            </TabButton>
+        <Container direction="row">
+          <TabButton onPress={changeTab}>
+            <TabText>전체 랭킹</TabText>
+          </TabButton>
 
-            <TabButton selected={true}>
-              <TabText selected={true}>친구 랭킹</TabText>
-            </TabButton>
-          </Container>
-        )}
+          <TabButton selected={true}>
+            <TabText selected={true}>친구 랭킹</TabText>
+          </TabButton>
+        </Container>
+      )}
       <RankingListView>
-        {
-          ranklist.map((v, i) => userInfo(i, v.nickname, v.uid))
-        }
+        {ranklist.map((v, i) => userInfo(i, v.nickname, v.uid))}
       </RankingListView>
-      <Container direction='column'>
+      <Container direction="column">
         <DividerView>
           <Text>내 랭킹</Text>
           <DividerLineView />
@@ -65,11 +57,11 @@ export const RankingScreen = ({tab, myRank, ranklist, changeTab}) => {
       </Container>
     </>
   );
-}
+};
 
 const Container = styled.View`
   flex: 1;
-  flex-direction: ${props => props.direction};
+  flex-direction: ${(props) => props.direction};
   justify-content: center;
   align-items: center;
 `;
@@ -80,12 +72,12 @@ const TabButton = styled.TouchableOpacity`
   margin: 4px;
   padding: 4px;
 
-  background-color: ${props => props.selected ? 'black' : 'white'};
+  background-color: ${(props) => (props.selected ? "black" : "white")};
 `;
 
 const TabText = styled.Text`
-  font-size: ${props => props.selected ? '30px' : '20px'};
-  color: ${props => props.selected ? 'white' : 'black'};
+  font-size: ${(props) => (props.selected ? "30px" : "20px")};
+  color: ${(props) => (props.selected ? "white" : "black")};
 `;
 
 const RankingListView = styled.ScrollView`
@@ -141,4 +133,3 @@ const DividerLineView = styled.View`
   height: 1px;
   width: 300px;
 `;
-
