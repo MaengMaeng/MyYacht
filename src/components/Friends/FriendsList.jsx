@@ -27,7 +27,7 @@ const FriendsRequestButton = () => {
   );
 };
 
-export default function ({ friendsList, isReqSelected }) {
+export default function ({ friendsList, tabNumber }) {
   return (
     <Container>
       {friendsList ? (
@@ -37,7 +37,7 @@ export default function ({ friendsList, isReqSelected }) {
               <Profile name={data.name} uid={data.uid} />
             </LeftContainer>
             <RightContainer>
-              {isReqSelected ? <FriendsRequestButton /> : <FriendsButton />}
+              {tabNumber ? <FriendsRequestButton /> : <FriendsButton />}
             </RightContainer>
           </ItemContainer>
         ))

@@ -5,7 +5,7 @@ import FriendsList from "../../components/Friends/FriendsList";
 import Tab from "../../components/Friends/Tab";
 
 export default function ({
-  isReqSelected,
+  tabNumber,
   onClickLeftTab,
   onClickRightTab,
   friendsList,
@@ -14,23 +14,17 @@ export default function ({
   return (
     <Container>
       <Tab
-        isReqSelected={isReqSelected}
+        tabNumber={tabNumber}
         onClickLeftTab={onClickLeftTab}
         onClickRightTab={onClickRightTab}
       />
       <ListContainer>
-        {isReqSelected ? (
+        {tabNumber ? (
           // 신청받은 목록
-          <FriendsList
-            friendsList={friendsRequestList}
-            isReqSelected={isReqSelected}
-          />
+          <FriendsList friendsList={friendsRequestList} tabNumber={tabNumber} />
         ) : (
           // 친구 목록
-          <FriendsList
-            friendsList={friendsList}
-            isReqSelected={isReqSelected}
-          />
+          <FriendsList friendsList={friendsList} tabNumber={tabNumber} />
         )}
       </ListContainer>
     </Container>
