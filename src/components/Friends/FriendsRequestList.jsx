@@ -13,7 +13,6 @@ const Container = styled.ScrollView`
   height: ${newHeight};
 `;
 const ItemContainer = styled.View`
-  display: flex;
   padding: 10px;
   margin-bottom: 10px;
   flex-direction: row;
@@ -21,6 +20,9 @@ const ItemContainer = styled.View`
   height: 60px;
 `;
 
+const LeftContainer = styled.View`
+  flex: 4;
+`;
 const RightContainer = styled.View`
   flex-direction: row;
   margin-left: auto;
@@ -31,7 +33,9 @@ export default function ({ friendsRequestList }) {
     <Container>
       {friendsRequestList.map((data) => (
         <ItemContainer key={data.uid}>
-          <Profile name={data.name} uid={data.uid} />
+          <LeftContainer>
+            <Profile name={data.name} uid={data.uid} />
+          </LeftContainer>
           <RightContainer>
             <Button color="#10a1e2">수락</Button>
             <Button color="#d51d36">거절</Button>
