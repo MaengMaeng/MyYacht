@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components/native";
 
 import FriendsList from "../../components/Friends/FriendsList";
-import FriendsRequestList from "../../components/Friends/FriendsRequestList";
 import Tab from "../../components/Friends/Tab";
 
 const Container = styled.View`
@@ -36,9 +35,17 @@ export default function ({
       />
       <ListContainer>
         {isReqSelected ? (
-          <FriendsRequestList friendsRequestList={friendsRequestList} />
+          // 신청받은 목록
+          <FriendsList
+            friendsList={friendsRequestList}
+            isReqSelected={isReqSelected}
+          />
         ) : (
-          <FriendsList friendsList={friendsList} />
+          // 친구 목록
+          <FriendsList
+            friendsList={friendsList}
+            isReqSelected={isReqSelected}
+          />
         )}
       </ListContainer>
     </Container>
