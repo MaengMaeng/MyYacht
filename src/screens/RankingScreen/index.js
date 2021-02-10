@@ -1,1 +1,1 @@
-export {RankingScreenContainer as RankingScreen} from './RankingScreenContainer';
+export { RankingScreenContainer as RankingScreen } from "./RankingScreenContainer";
