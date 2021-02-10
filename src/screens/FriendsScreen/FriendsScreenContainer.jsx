@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import FriendsPresenter from "./FriendsPresenter";
+import FriendsScreenPresenter from "./FriendsScreenPresenter";
 
 import dummy from "./dummy1";
 export default function () {
@@ -21,7 +21,7 @@ export default function () {
     saveDatas();
   }, []);
   return (
-    <FriendsPresenter
+    <FriendsScreenPresenter
       isReqSelected={isReqSelected}
       onClickLeftTab={onClickLeftTab}
       onClickRightTab={onClickRightTab}
