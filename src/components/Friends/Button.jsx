@@ -1,6 +1,14 @@
 import React from "react";
 import styled from "styled-components/native";
 
+export default function ({ children, color }) {
+  return (
+    <Button color={color}>
+      <Text color={color}> {children} </Text>
+    </Button>
+  );
+}
+
 const Button = styled.TouchableOpacity`
   padding-vertical: 5px;
   padding-horizontal: 10px;
@@ -15,11 +23,3 @@ const Text = styled.Text`
   font-weight: bold;
   color: ${(props) => props.color};
 `;
-
-export default function ({ children, color }) {
-  return (
-    <Button color={color}>
-      <Text color={color}> {children} </Text>
-    </Button>
-  );
-}

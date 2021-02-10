@@ -1,6 +1,15 @@
 import React from "react";
 import styled from "styled-components/native";
 
+export default function ({ name, uid }) {
+  return (
+    <Container>
+      <NickNameText> {name} </NickNameText>
+      <IdCodeText> #{uid} </IdCodeText>
+    </Container>
+  );
+}
+
 const Container = styled.View`
   flex-direction: row;
 `;
@@ -14,12 +23,3 @@ const NickNameText = styled.Text`
   font-size: 18px;
   font-weight: bold;
 `;
-
-export default function ({ name, uid }) {
-  return (
-    <Container>
-      <NickNameText> {name} </NickNameText>
-      <IdCodeText> #{uid} </IdCodeText>
-    </Container>
-  );
-}

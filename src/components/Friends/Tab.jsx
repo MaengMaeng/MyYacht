@@ -2,6 +2,19 @@ import React from "react";
 import { Text } from "react-native";
 import styled from "styled-components/native";
 
+export default function ({ isReqSelected, onClickLeftTab, onClickRightTab }) {
+  return (
+    <TabContainer>
+      <LeftButton isReqSelected={isReqSelected} onPress={onClickLeftTab}>
+        <Text>목록</Text>
+      </LeftButton>
+      <RightButton isReqSelected={isReqSelected} onPress={onClickRightTab}>
+        <Text>신청</Text>
+      </RightButton>
+    </TabContainer>
+  );
+}
+
 const TabContainer = styled.View`
   align-items: center;
   justify-content: center;
@@ -24,16 +37,3 @@ const RightButton = styled.TouchableOpacity`
   border-bottom-color: ${(props) => (props.isReqSelected ? "black" : "white")};
   border-bottom-width: 4px;
 `;
-
-export default function ({ isReqSelected, onClickLeftTab, onClickRightTab }) {
-  return (
-    <TabContainer>
-      <LeftButton isReqSelected={isReqSelected} onPress={onClickLeftTab}>
-        <Text>목록</Text>
-      </LeftButton>
-      <RightButton isReqSelected={isReqSelected} onPress={onClickRightTab}>
-        <Text>신청</Text>
-      </RightButton>
-    </TabContainer>
-  );
-}
