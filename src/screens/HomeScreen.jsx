@@ -1,27 +1,38 @@
 import React from "react";
 import styled from "styled-components/native";
-import { View, Text } from "react-native";
+import {
+  PRACTICE_ICON,
+  AI_ICON,
+  NORMAL_ICON,
+  RANK_ICON,
+} from "../../assets/home";
 
 export default function () {
   return (
     <ContainerView>
       <SectionView>
-        <SectionText>single</SectionText>
+        <SectionText>SINGLE</SectionText>
         <PlayButton>
-          <Text>연습</Text>
+          <PlayButtonImage source={PRACTICE_ICON}></PlayButtonImage>
+          <PlayButtonText>Practice</PlayButtonText>
         </PlayButton>
         <PlayButton>
-          <Text>AI 대전</Text>
+          <PlayButtonImage source={AI_ICON}></PlayButtonImage>
+          <PlayButtonText>AI</PlayButtonText>
         </PlayButton>
       </SectionView>
       <DividerView />
       <SectionView>
-        <SectionText>multi</SectionText>
+        <SectionText>MULTI</SectionText>
         <PlayButton>
-          <Text>노말 게임</Text>
+          <PlayButtonImage source={NORMAL_ICON}></PlayButtonImage>
+
+          <PlayButtonText>Normal</PlayButtonText>
         </PlayButton>
         <PlayButton>
-          <Text>랭크 게임</Text>
+          <PlayButtonImage source={RANK_ICON}></PlayButtonImage>
+
+          <PlayButtonText>Rank</PlayButtonText>
         </PlayButton>
       </SectionView>
     </ContainerView>
@@ -33,6 +44,8 @@ const ContainerView = styled.View`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+
+  background: white;
 `;
 
 const SectionView = styled.View`
@@ -50,16 +63,29 @@ const DividerView = styled.View`
 `;
 
 const SectionText = styled.Text`
-  justify-content: center;
+  font-size: 20px;
+  font-weight: bold;
 `;
 
 const PlayButton = styled.TouchableOpacity`
-  width: 30vw;
-  height: 30vw;
-
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 1px solid black;
+
+  width: 30vw;
+  height: 30vw;
   margin: 5% 0 5% 0;
+
+  border: 2px solid black;
+  border-radius: 15%;
+`;
+
+const PlayButtonImage = styled.Image`
+  height: 12vw;
+  width: 12vw;
+`;
+
+const PlayButtonText = styled.Text`
+  font-size: 20px;
+  font-weight: bold;
 `;
