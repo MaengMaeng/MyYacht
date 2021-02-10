@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { RankingScreen } from "./RankingScreen";
+import { RankingScreen } from "./RankingScreenPresenter";
 
 import {
   TOTAL_RANKING,
@@ -10,7 +10,7 @@ import {
 } from "./ranking_dummy";
 
 export const RankingScreenContainer = () => {
-  const [tab, setTab] = useState(0);
+  const [tabNumber, setTabNumber] = useState(0);
   const [ranklist, setRanklist] = useState([]);
   const defaultMyRank = {
     rank: 0,
@@ -21,7 +21,7 @@ export const RankingScreenContainer = () => {
   const [myRank, setMyRank] = useState(defaultMyRank);
 
   useEffect(() => {
-    if (!tab) {
+    if (!tabNumber) {
       setRanklist(TOTAL_RANKING);
       setMyRank(MY_TOTAL_RANKING);
     } else {
@@ -31,16 +31,16 @@ export const RankingScreenContainer = () => {
   }, []);
 
   const changeTab = () => {
-    if (tab) {
+    if (tabNumber) {
       setRanklist(TOTAL_RANKING);
       setMyRank(MY_TOTAL_RANKING);
-      setTab(0);
+      setTabNumber(0);
     } else {
       setRanklist(FRIENDS_RANKING);
       setMyRank(MY_FRIENDS_RANKING);
-      setTab(1);
+      setTabNumber(1);
     }
   };
 
-  return <RankingScreen {...{ tab, ranklist, myRank, changeTab }} />;
+  return <RankingScreen {...{ tabNumber, ranklist, myRank, changeTab }} />;
 };

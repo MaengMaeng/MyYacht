@@ -3,7 +3,7 @@ import styled from "styled-components/native";
 
 import { Text } from "react-native";
 
-export const RankingScreen = ({ tab, myRank, ranklist, changeTab }) => {
+export const RankingScreen = ({ tabNumber, myRank, ranklist, changeTab }) => {
   const rankParser = ["1st", "2nd", "3rd"];
 
   const userInfo = (rank, nickname, uid) => {
@@ -24,7 +24,7 @@ export const RankingScreen = ({ tab, myRank, ranklist, changeTab }) => {
 
   return (
     <>
-      {tab === 0 ? (
+      {!tabNumber ? (
         <Container direction="row">
           <TabButton selected={true}>
             <TabText selected={true}>전체 랭킹</TabText>
