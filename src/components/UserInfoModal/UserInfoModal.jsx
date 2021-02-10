@@ -5,7 +5,48 @@ import USER_ICON from "../../../assets/user.png";
 
 const { width } = Dimensions.get("window");
 
-export const UserInfoModal = ({ modalVisible, setModalVisible }) => {
+export const UserInfoModal = ({ userInfo, modalVisible, setModalVisible }) => {
+  const Info = (label, info) => {
+    return (
+      <InfoContainerView>
+        <DividerView>
+          <DividerText>{label}</DividerText>
+          <DividerLineView></DividerLineView>
+        </DividerView>
+        <InfoView>
+          <InfoLineView>
+            <InfoTextView>
+              <InfoLineText>승 / 패</InfoLineText>
+            </InfoTextView>
+            <InfoTextView>
+              <InfoLineText>
+                {info.win} / {info.lose}
+              </InfoLineText>
+            </InfoTextView>
+          </InfoLineView>
+          <InfoLineView>
+            <InfoTextView>
+              <InfoLineText>최고 족보 점수</InfoLineText>
+            </InfoTextView>
+            <InfoTextView>
+              <InfoLineText>{info.bestTableScore}</InfoLineText>
+            </InfoTextView>
+          </InfoLineView>
+          {info.rankScore ? (
+            <InfoLineView>
+              <InfoTextView>
+                <InfoLineText>랭크 점수</InfoLineText>
+              </InfoTextView>
+              <InfoTextView>
+                <InfoLineText>{info.rankScore}</InfoLineText>
+              </InfoTextView>
+            </InfoLineView>
+          ) : null}
+        </InfoView>
+      </InfoContainerView>
+    );
+  };
+
   return (
     <Modal
       visible={modalVisible}
@@ -15,101 +56,23 @@ export const UserInfoModal = ({ modalVisible, setModalVisible }) => {
       <ContainerView>
         <ProfileView>
           <ProfileImage source={USER_ICON}></ProfileImage>
-          <ProfileNicknameText>닉네임</ProfileNicknameText>
-          <ProfileUidText>#1234</ProfileUidText>
-
+          <ProfileNicknameText>
+            {userInfo ? userInfo.nickname : ""}
+          </ProfileNicknameText>
+          <ProfileUidText>#{userInfo ? userInfo.uid : ""}</ProfileUidText>
         </ProfileView>
         <InfoContainerView>
-          <DividerView>
-            <DividerText>종합</DividerText>
-            <DividerLineView></DividerLineView>
-          </DividerView>
-          <InfoView>
-            <InfoLineView>
-              <InfoTextView>
-                <InfoLineText>승 / 패</InfoLineText>
-              </InfoTextView>
-              <InfoTextView>
-                <InfoLineText>123 / 32</InfoLineText>
-              </InfoTextView>
-            </InfoLineView>
-            <InfoLineView>
-              <InfoTextView>
-                <InfoLineText>최고 족보 점수</InfoLineText>
-              </InfoTextView>
-              <InfoTextView>
-                <InfoLineText>232</InfoLineText>
-              </InfoTextView>
-            </InfoLineView>
-          </InfoView>
-        </InfoContainerView>
-        <InfoContainerView>
-          <DividerView>
-            <DividerText>랭크</DividerText>
-            <DividerLineView></DividerLineView>
-          </DividerView>
-          <InfoView>
-            <InfoLineView>
-              <InfoTextView>
-                <InfoLineText>승 / 패</InfoLineText>
-              </InfoTextView>
-              <InfoTextView>
-                <InfoLineText>123 / 32</InfoLineText>
-              </InfoTextView>
-            </InfoLineView>
-            <InfoLineView>
-              <InfoTextView>
-                <InfoLineText>최고 족보 점수</InfoLineText>
-              </InfoTextView>
-              <InfoTextView>
-                <InfoLineText>232</InfoLineText>
-              </InfoTextView>
-            </InfoLineView>
-            <InfoLineView>
-              <InfoTextView>
-                <InfoLineText>랭크 점수</InfoLineText>
-              </InfoTextView>
-              <InfoTextView>
-                <InfoLineText>1523</InfoLineText>
-              </InfoTextView>
-            </InfoLineView>
-          </InfoView>
-        </InfoContainerView>
-        <InfoContainerView>
-          <DividerView>
-            <DividerText>노말</DividerText>
-            <DividerLineView></DividerLineView>
-          </DividerView>
-          <InfoView>
-            <InfoLineView>
-              <InfoTextView>
-                <InfoLineText>승 / 패</InfoLineText>
-              </InfoTextView>
-              <InfoTextView>
-                <InfoLineText>123 / 32</InfoLineText>
-              </InfoTextView>
-            </InfoLineView>
-            <InfoLineView>
-              <InfoTextView>
-                <InfoLineText>최고 족보 점수</InfoLineText>
-              </InfoTextView>
-              <InfoTextView>
-                <InfoLineText>232</InfoLineText>
-              </InfoTextView>
-            </InfoLineView>
-          </InfoView>
+          {userInfo ? Info("통합", userInfo.total) : null}
+          {userInfo ? Info("랭크", userInfo.rank) : null}
+          {userInfo ? Info("노말", userInfo.normal) : null}
         </InfoContainerView>
         <ButtonView>
           <ButtonContainerView>
-          <CustomButton>
-              <ButtonText onPress={() => setModalVisible(false)}>
-                친구 추가
-              </ButtonText>
+            <CustomButton onPress={() => setModalVisible(false)}>
+              <ButtonText>친구 추가</ButtonText>
             </CustomButton>
-            <CustomButton dark>
-              <ButtonText dark onPress={() => setModalVisible(false)}>
-                확인
-              </ButtonText>
+            <CustomButton dark onPress={() => setModalVisible(false)}>
+              <ButtonText dark>확인</ButtonText>
             </CustomButton>
           </ButtonContainerView>
         </ButtonView>
@@ -239,13 +202,12 @@ const CustomButton = styled.TouchableOpacity`
   border: 2px solid black;
   border-radius: 15px;
 
-  background:${props => props.dark ? "black" : "white"};
+  background: ${(props) => (props.dark ? "black" : "white")};
 `;
 
 const ButtonText = styled.Text`
   font-size: 20px;
   font-weight: bold;
 
-  color:${props => props.dark ? "white" : "black"};
-
+  color: ${(props) => (props.dark ? "white" : "black")};
 `;

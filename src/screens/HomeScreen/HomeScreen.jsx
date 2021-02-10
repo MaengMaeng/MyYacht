@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components/native";
 import {
   PRACTICE_ICON,
@@ -8,15 +8,23 @@ import {
 } from "../../../assets/home";
 import { Dimensions } from 'react-native';
 
+import {userInfo} from '../../components/UserInfoModal/dummy';
+import {UserInfoModal} from '../../components/UserInfoModal/UserInfoModal';
+
 const {width} = Dimensions.get("window");
 
 export default function () {
+  const [modalVisible, setModalVisible] = useState(false);
+
   return (
     <ContainerView>
+      <UserInfoModal
+        {...{userInfo, modalVisible, setModalVisible}}
+      ></UserInfoModal>
       <SectionView>
         <SectionText>SINGLE</SectionText>
-        <PlayButton>
-          <PlayButtonImage source={PRACTICE_ICON}></PlayButtonImage>
+        <PlayButton onPress={() => setModalVisible(true)}>
+          <PlayButtonImage source={PRACTICE_ICON} ></PlayButtonImage>
           <PlayButtonText>Practice</PlayButtonText>
         </PlayButton>
         <PlayButton>
