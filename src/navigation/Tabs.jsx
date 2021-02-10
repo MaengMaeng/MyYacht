@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 
 import {RankingScreen} from "../screens/RankingScreen";
-import Home from "../screens/HomeScreen";
+import {HomeScreen} from "../screens/HomeScreen";
 import Friends from "../screens/Friends";
 
 const Tabs = createBottomTabNavigator();
@@ -32,7 +32,7 @@ export default function () {
       }}
     >
       <Tabs.Screen name="Ranking" component={RankingScreen} />
-      <Tabs.Screen name="Home" component={Home} />
+      <Tabs.Screen name="Home" component={HomeScreen} />
       <Tabs.Screen name="Friends" component={Friends} />
     </Tabs.Navigator>
   );
