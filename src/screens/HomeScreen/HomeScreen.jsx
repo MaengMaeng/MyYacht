@@ -6,6 +6,9 @@ import {
   NORMAL_ICON,
   RANK_ICON,
 } from "../../../assets/home";
+import { Dimensions } from 'react-native';
+
+const {width} = Dimensions.get("window");
 
 export default function () {
   return (
@@ -72,17 +75,17 @@ const PlayButton = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
 
-  width: 30vw;
-  height: 30vw;
+  width: ${Math.floor(width * (30/100))}px;
+  height: ${Math.floor(width * (30/100))}px;
   margin: 5% 0 5% 0;
 
   border: 2px solid black;
-  border-radius: 15%;
+  border-radius: 15px;
 `;
 
 const PlayButtonImage = styled.Image`
-  height: 12vw;
-  width: 12vw;
+  height: ${Math.floor(width * (12/100))}px;
+  width: ${Math.floor(width * (12/100))}px;
 `;
 
 const PlayButtonText = styled.Text`
