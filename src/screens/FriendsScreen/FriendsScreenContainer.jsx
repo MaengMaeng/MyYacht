@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
-import FriendsPresenter from "./FriendsPresenter";
+import FriendsScreenPresenter from "./FriendsScreenPresenter";
 
 import dummy from "./dummy1";
 export default function () {
-  const [isReqSelected, setIsReqSelected] = useState(false);
+  const [tabNumber, setTabNumber] = useState(0);
   const [friendsList, setFriendsList] = useState(null);
   const [friendsRequestList, setFriendsRequestList] = useState(null);
 
   const onClickLeftTab = () => {
-    setIsReqSelected(false);
+    setTabNumber(0);
   };
   const onClickRightTab = () => {
-    setIsReqSelected(true);
+    setTabNumber(1);
   };
   const saveDatas = () => {
     setFriendsList(dummy);
@@ -21,8 +21,8 @@ export default function () {
     saveDatas();
   }, []);
   return (
-    <FriendsPresenter
-      isReqSelected={isReqSelected}
+    <FriendsScreenPresenter
+      tabNumber={tabNumber}
       onClickLeftTab={onClickLeftTab}
       onClickRightTab={onClickRightTab}
       friendsList={friendsList}
