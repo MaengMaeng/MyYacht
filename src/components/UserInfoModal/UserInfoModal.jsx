@@ -5,7 +5,7 @@ import USER_ICON from "../../../assets/user.png";
 
 const { width } = Dimensions.get("window");
 
-export const UserInfoModal = ({ userInfo, modalVisible, setModalVisible }) => {
+export const UserInfoModal = ({ userInfo, modalVisible, setModalVisible, addToFriend }) => {
   const Info = (label, info) => {
     return (
       <InfoContainerView>
@@ -47,6 +47,20 @@ export const UserInfoModal = ({ userInfo, modalVisible, setModalVisible }) => {
     );
   };
 
+  const addFriendButton = () => {
+    return (
+      <CustomButton onPress={addFriend}>
+        <ButtonText>친구 추가</ButtonText>
+      </CustomButton>
+    )
+  }
+
+  const addFriend = () => {
+    /*
+    * 친구 추가 코드
+    */
+  }
+
   return (
     <Modal
       visible={modalVisible}
@@ -68,9 +82,7 @@ export const UserInfoModal = ({ userInfo, modalVisible, setModalVisible }) => {
         </InfoContainerView>
         <ButtonView>
           <ButtonContainerView>
-            <CustomButton onPress={() => setModalVisible(false)}>
-              <ButtonText>친구 추가</ButtonText>
-            </CustomButton>
+            {addToFriend ? addFriendButton() : null}
             <CustomButton dark onPress={() => setModalVisible(false)}>
               <ButtonText dark>확인</ButtonText>
             </CustomButton>

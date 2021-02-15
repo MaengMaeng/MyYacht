@@ -19,6 +19,7 @@ export default function () {
   return (
     <ContainerView>
       <UserInfoModal
+        addToFriend
         {...{userInfo, modalVisible, setModalVisible}}
       ></UserInfoModal>
       <SectionView>
