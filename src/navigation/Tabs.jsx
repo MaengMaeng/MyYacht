@@ -3,9 +3,10 @@ import { Platform } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 
-import {RankingScreen} from "../screens/RankingScreen";
-import {HomeScreen} from "../screens/HomeScreen";
+import { RankingScreen } from "../screens/RankingScreen";
+// import {HomeScreen} from "../screens/HomeScreen";
 import FriendsScreen from "../screens/FriendsScreen";
+import PlayScreen from "../screens/PlayScreen/PlayScreen";
 
 const Tabs = createBottomTabNavigator();
 
@@ -32,7 +33,7 @@ export default function () {
       }}
     >
       <Tabs.Screen name="Ranking" component={RankingScreen} />
-      <Tabs.Screen name="Home" component={HomeScreen} />
+      <Tabs.Screen name="Home" component={PlayScreen} />
       <Tabs.Screen name="Friends" component={FriendsScreen} />
     </Tabs.Navigator>
   );
