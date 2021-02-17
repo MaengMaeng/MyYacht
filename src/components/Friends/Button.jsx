@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components/native";
 
-export default function ({ children, color }) {
+export default function ({ children, color, onClick }) {
   return (
-    <Button color={color}>
+    <Button color={color} onPress={onClick}>
       <Text color={color}> {children} </Text>
     </Button>
   );

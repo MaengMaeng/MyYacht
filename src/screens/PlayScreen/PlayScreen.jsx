@@ -1,5 +1,6 @@
-import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import React, { useEffect } from "react";
+import { Text, BackHandler, StatusBar } from "react-native";
+import styled from "styled-components/native";
 
 import {
   diamond,
@@ -17,10 +18,26 @@ import {
 } from "../../../assets/play";
 import { Pedigree, Total } from "../../components/Play";
 export default function () {
+  const backAction = () => {
+    return true;
+  };
+
+  useEffect(() => {
+    BackHandler.addEventListener("hardwareBackPress", backAction);
+    // status bar hidden
+    StatusBar.setHidden(true);
+
+    // WillUnmount
+    return () => {
+      BackHandler.removeEventListener("hardwareBackPress", backAction);
+      StatusBar.setHidden(false);
+    };
+  }, []);
+
   return (
-    <View style={styles.container}>
-      <View style={styles.pedigreeContainer}>
-        <View style={styles.PedigreeList}>
+    <Container>
+      <PedigreeContainer>
+        <PedigreeList>
           <Pedigree title="Aces" image={dice1} />
           <Pedigree title="Duces" image={dice2} />
           <Pedigree title="Threes" image={dice3} />
@@ -28,108 +45,98 @@ export default function () {
           <Pedigree title="Fives" image={dice5} />
           <Pedigree title="Sixes" image={dice6} />
 
-          <View style={styles.Bonus}>
+          <TotalContainer>
             <Total title="Bonus" myScore="2" rivalScore="50" />
-          </View>
-        </View>
-        <View style={styles.PedigreeList}>
+          </TotalContainer>
+        </PedigreeList>
+
+        <PedigreeList>
           <Pedigree title="Choice" image={diamond} />
           <Pedigree title="4 Of a Kind" image={clover} />
           <Pedigree title="Full House" image={home} />
           <Pedigree title="Small Straight" image={stairs} />
           <Pedigree title="Large Straight" image={stairsbox} />
           <Pedigree title="Yacht" image={pentagon} />
-          <View style={styles.Total}>
+          <TotalContainer>
             <Total title="Total" myScore="133" rivalScore="350" />
-          </View>
-        </View>
-      </View>
-      <View style={styles.diceContainer}>
-        <View style={styles.dice}>
-          <Image source={dice1} style={styles.diceImage} />
-        </View>
-        <View style={styles.dice}>
-          <Image source={dice2} style={styles.diceImage} />
-        </View>
-        <View style={styles.dice}>
-          <Image source={dice3} style={styles.diceImage} />
-        </View>
-        <View style={styles.dice}>
-          <Image source={dice4} style={styles.diceImage} />
-        </View>
-        <View style={styles.dice}>
-          <Image source={dice5} style={styles.diceImage} />
-        </View>
-      </View>
-      <View style={styles.buttonContainer}>
-        <View style={styles.button}>
+          </TotalContainer>
+        </PedigreeList>
+      </PedigreeContainer>
+      <DiceContainer>
+        <Dice>
+          <DiceImage source={dice1} />
+        </Dice>
+        <Dice>
+          <DiceImage source={dice2} />
+        </Dice>
+        <Dice>
+          <DiceImage source={dice3} />
+        </Dice>
+        <Dice>
+          <DiceImage source={dice4} />
+        </Dice>
+        <Dice>
+          <DiceImage source={dice5} />
+        </Dice>
+      </DiceContainer>
+      <ButtonContainer>
+        <Button>
           <Text>Roll</Text>
-        </View>
-        <View style={styles.button}>
+        </Button>
+        <Button>
           <Text>Submit</Text>
-        </View>
-      </View>
-    </View>
+        </Button>
+      </ButtonContainer>
+    </Container>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "white",
-  },
-  pedigreeContainer: {
-    flex: 9,
-    flexDirection: "row",
-    // borderWidth: 2,
-    // borderColor: "black",
-    // borderRadius: 10,
-    marginVertical: 20,
-    // marginHorizontal: 10,
-  },
+const Container = styled.View`
+  flex: 1;
+  background-color: white;
+`;
+const PedigreeContainer = styled.View`
+  flex: 9;
+  flex-direction: row;
+  margin-vertical: 20px;
+`;
+const PedigreeList = styled.View`
+  flex: 1;
+  margin-horizontal: 10px;
+`;
+const TotalContainer = styled.View`
+  flex: 1.5;
+  margin-top: 10px;
+`;
+const DiceContainer = styled.View`
+  flex: 2;
+  flex-direction: row;
+  margin-vertical: 20px;
+  margin-horizontal: 10px;
+  align-items: center;
+  justify-content: center;
+`;
 
-  PedigreeList: {
-    flex: 1,
-    // marginVertical: 10,
-    marginHorizontal: 10,
-  },
+const Dice = styled.View`
+  flex: 1;
+`;
+const DiceImage = styled.Image`
+  width: 60px;
+  height: 60px;
+`;
 
-  Bonus: {
-    flex: 1.5,
-    marginTop: 10,
-  },
-  Total: {
-    flex: 1.5,
-    marginTop: 10,
-  },
-  diceContainer: {
-    flex: 2,
-    flexDirection: "row",
-    // borderWidth: 2,
-    marginVertical: 20,
-    marginHorizontal: 10,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  diceImage: {
-    width: 60,
-    height: 60,
-  },
-  dice: {
-    flex: 1,
-  },
-  buttonContainer: {
-    flex: 1,
-    flexDirection: "row",
-    marginVertical: 20,
-    marginHorizontal: 10,
-  },
-  button: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    borderWidth: 2,
-    borderRadius: 5,
-    marginHorizontal: 20,
-  },
-});
+const ButtonContainer = styled.View`
+  flex: 1;
+  flex-direction: row;
+  margin-vertical: 20px;
+  margin-horizontal: 10px;
+`;
+
+const Button = styled.TouchableOpacity`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  border-width: 2px;
+  border-radius: 5px;
+  margin-horizontal: 20px;
+`;

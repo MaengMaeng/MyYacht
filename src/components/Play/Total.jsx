@@ -1,72 +1,72 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import styled from "styled-components/native";
 
 export default function ({ title, myScore, rivalScore }) {
   return (
     <>
       {title == "Total" ? (
-        <View style={styles.container}>
-          <View style={styles.titleContainer}>
-            <Text style={styles.titleText}>{title}</Text>
-          </View>
-          <View style={styles.myScore}> {myScore} </View>
-          <View style={styles.rivalScore}> {rivalScore}</View>
-        </View>
+        <Container>
+          <TitleContainer>
+            <TitleText>{title}</TitleText>
+          </TitleContainer>
+          <MyScore>
+            <ScoreText>{myScore}</ScoreText>
+          </MyScore>
+          <RivalScore>
+            <ScoreText>{rivalScore}</ScoreText>
+          </RivalScore>
+        </Container>
       ) : (
         // Bonus
-        <View style={styles.container}>
-          <View style={styles.titleContainer}>
-            <Text style={styles.titleText}>{title}</Text>
-            <Text style={styles.titleText}>+35</Text>
-          </View>
-          <View style={styles.myScore}>
-            <View>
-              <Text style={styles.scoreText}>{myScore}</Text>
-            </View>
-            <View>
-              <Text style={styles.scoreText}>/63</Text>
-            </View>
-          </View>
-          <View style={styles.rivalScore}>
-            <Text style={styles.scoreText}>{rivalScore}</Text>
-            <Text style={styles.scoreText}>/63</Text>
-          </View>
-        </View>
+        <Container>
+          <TitleContainer>
+            <TitleText>{title}</TitleText>
+            <TitleText>+35</TitleText>
+          </TitleContainer>
+
+          <MyScore>
+            <ScoreText> {myScore} </ScoreText>
+            <ScoreText>/63</ScoreText>
+          </MyScore>
+
+          <RivalScore>
+            <ScoreText>{rivalScore}</ScoreText>
+            <ScoreText>/63</ScoreText>
+          </RivalScore>
+        </Container>
       )}
     </>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: "row",
-  },
-  titleContainer: {
-    flex: 2,
-    borderWidth: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "black",
-  },
-  titleText: {
-    fontFamily: "bold",
-    color: "white",
-  },
-  scoreText: {
-    fontFamily: "bold",
-  },
-  myScore: {
-    flex: 1,
-    borderWidth: 1,
-    backgroundColor: "#FFC000",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  rivalScore: {
-    flex: 1,
-    borderWidth: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
+const Container = styled.View`
+  flex: 1;
+  flex-direction: row;
+`;
+const TitleContainer = styled.View`
+  flex: 2;
+  border-width: 1px;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+`;
+const TitleText = styled.Text`
+  font-weight: bold;
+  color: white;
+`;
+const ScoreText = styled.Text`
+  font-weight: bold;
+`;
+const MyScore = styled.View`
+  flex: 1;
+  border-width: 1px;
+  background-color: #ffc000;
+  align-items: center;
+  justify-content: center;
+`;
+const RivalScore = styled.View`
+  flex: 1;
+  border-width: 1px;
+  align-items: center;
+  justify-content: center;
+`;
