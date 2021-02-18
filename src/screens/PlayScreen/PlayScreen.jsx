@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Text, BackHandler, StatusBar } from "react-native";
 import styled from "styled-components/native";
 import {io} from 'socket.io-client';
+import * as config from '../../../config';
 
 import {
   diamond,
@@ -22,14 +23,11 @@ import { Pedigree, Total } from "../../components/Play";
 let socket;
 
 export default function () {
-  console.log(socket);
   const [holdDices, setHoldDices] = useState([false, false, false, false, false]);
 
   const emitHoldDices = (number) => {
     let dices = holdDices.slice();
     dices[number] = !dices[number];
-
-    console.log('hold', dices);
 
     socket.emit('hold', dices);
   }
@@ -43,7 +41,7 @@ export default function () {
     // status bar hidden
     StatusBar.setHidden(true);
 
-    socket = io('SERVER_URL');
+    socket = io(config.SERVER_URL);
 
     socket.on('hold', (data) => {
       setHoldDices(data);
