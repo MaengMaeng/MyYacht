@@ -1,8 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Text, BackHandler, StatusBar } from "react-native";
+import React from "react";
 import styled from "styled-components/native";
-import {io} from 'socket.io-client';
-
 import {
   diamond,
   clover,
@@ -17,45 +14,16 @@ import {
   dice5,
   dice6,
 } from "../../../assets/play";
-import { Pedigree, Total } from "../../components/Play";
+import { Pedigree, Total, Dice } from "../../components/Play";
 
-let socket;
-
-export default function () {
-  console.log(socket);
-  const [holdDices, setHoldDices] = useState([false, false, false, false, false]);
-
-  const emitHoldDices = (number) => {
-    let dices = holdDices.slice();
-    dices[number] = !dices[number];
-
-    console.log('hold', dices);
-
-    socket.emit('hold', dices);
-  }
-
-  const backAction = () => {
-    return true;
-  };
-
-  useEffect(() => {
-    BackHandler.addEventListener("hardwareBackPress", backAction);
-    // status bar hidden
-    StatusBar.setHidden(true);
-
-    socket = io('SERVER_URL');
-
-    socket.on('hold', (data) => {
-      setHoldDices(data);
-    })
-
-    // WillUnmount
-    return () => {
-      BackHandler.removeEventListener("hardwareBackPress", backAction);
-      StatusBar.setHidden(false);
-    };
-  }, []);
-
+export default function ({
+  isTurn,
+  dices,
+  holdDices,
+  emitHoldDices,
+  rollHandler,
+  submitHandler,
+}) {
   return (
     <Container>
       <PedigreeContainer>
@@ -85,28 +53,21 @@ export default function () {
         </PedigreeList>
       </PedigreeContainer>
       <DiceContainer>
-        <Dice hold={holdDices[0]} onPress={() => emitHoldDices(0)}>
-          <DiceImage source={dice1} />
-        </Dice>
-        <Dice hold={holdDices[1]} onPress={() => emitHoldDices(1)}>
-          <DiceImage source={dice2} />
-        </Dice>
-        <Dice hold={holdDices[2]}  onPress={() => emitHoldDices(2)}>
-          <DiceImage source={dice3} />
-        </Dice>
-        <Dice hold={holdDices[3]} onPress={() => emitHoldDices(3)}>
-          <DiceImage source={dice4} />
-        </Dice>
-        <Dice hold={holdDices[4]} onPress={() => emitHoldDices(4)}>
-          <DiceImage source={dice5} />
-        </Dice>
+        {dices.map((value, index) => (
+          <Dice
+            hold={holdDices[index]}
+            value={value}
+            isTurn={isTurn}
+            onPress={() => emitHoldDices(index)}
+          />
+        ))}
       </DiceContainer>
       <ButtonContainer>
-        <Button>
-          <Text>Roll</Text>
+        <Button disabled={!isTurn} onPress={rollHandler}>
+          <ButtonText>Roll</ButtonText>
         </Button>
-        <Button>
-          <Text>Submit</Text>
+        <Button disabled={!isTurn} onPress={submitHandler}>
+          <ButtonText>Submit</ButtonText>
         </Button>
       </ButtonContainer>
     </Container>
@@ -138,20 +99,6 @@ const DiceContainer = styled.View`
   align-items: center;
   justify-content: center;
 `;
-
-const Dice = styled.TouchableOpacity`
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-  border: ${props => props.hold ? '2px solid black' : '2px solid white'};
-  border-radius: 8px;
-`;
-
-const DiceImage = styled.Image`
-  width: 60px;
-  height: 60px;
-`;
-
 const ButtonContainer = styled.View`
   flex: 1;
   flex-direction: row;
@@ -167,3 +114,5 @@ const Button = styled.TouchableOpacity`
   border-radius: 5px;
   margin-horizontal: 20px;
 `;
+
+const ButtonText = styled.Text``;

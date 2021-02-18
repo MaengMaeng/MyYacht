@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components/native";
 
-export default function ({ title, image }) {
+export default function ({ title, image, myScore, rivalScore }) {
   return (
     <Container>
       <DiceContainer>
@@ -12,8 +12,8 @@ export default function ({ title, image }) {
           <Text>{title}</Text>
         </TextContainer>
       </DiceContainer>
-      <MyScore></MyScore>
-      <RivalScore></RivalScore>
+      <MyScore>{myScore}</MyScore>
+      <RivalScore>{rivalScore}</RivalScore>
     </Container>
   );
 }
