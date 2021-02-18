@@ -27,7 +27,10 @@ export default function () {
   };
 
   const rollHandler = () => {
-    socket.emit("roll", holdDices);
+    const data = new Object();
+    data.dices = dices;
+    data.holddDices = holdDices;
+    socket.emit("roll", data);
   };
 
   const submitHandler = () => {

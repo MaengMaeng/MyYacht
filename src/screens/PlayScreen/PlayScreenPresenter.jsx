@@ -55,6 +55,7 @@ export default function ({
       <DiceContainer>
         {dices.map((value, index) => (
           <Dice
+            key={index}
             hold={holdDices[index]}
             value={value}
             isTurn={isTurn}

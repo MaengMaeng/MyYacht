@@ -16,18 +16,14 @@ const getImage = (num) => {
 };
 
 export default function ({ isTurn, value, hold, onPress }) {
-  const imageSource = `dice${value}`;
   return (
-    <Container disabled={!isTurn} hold={hold} onPress={onPress}>
-      {console.log(imageSource)}
-      {/* <DiceImage source={imageSource} /> */}
-      {/* <DiceImage source={{ uri: `dice${value}` }} /> */}
+    <Dice disabled={!isTurn} hold={hold} onPress={onPress}>
       <DiceImage source={getImage(value)} />
-    </Container>
+    </Dice>
   );
 }
 
-const Container = styled.TouchableOpacity`
+const Dice = styled.TouchableOpacity`
   flex: 1;
   align-items: center;
   justify-content: center;
