@@ -16,6 +16,7 @@ export default function () {
     false,
   ]);
   const [dices, setDices] = useState([1, 2, 3, 4, 5]);
+  const [myScore, setMyScore] = useState({});
 
   const emitHoldDices = (number) => {
     let dices = holdDices.slice();
@@ -48,6 +49,10 @@ export default function () {
 
     socket = io("http://172.23.208.1:8080");
 
+    socket.on("pre_calcurate", (data) => {
+      setMyScore(data);
+    });
+
     socket.on("roll", (data) => {
       setDices(data);
     });
@@ -75,6 +80,7 @@ export default function () {
         holdDices,
         emitHoldDices,
         rollHandler,
+        myScore,
         submitHandler,
       }}
     />

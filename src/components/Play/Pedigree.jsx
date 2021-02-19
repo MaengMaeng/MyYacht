@@ -1,18 +1,55 @@
 import React from "react";
 import styled from "styled-components/native";
 
-export default function ({ title, image, myScore, rivalScore }) {
+import {
+  diamond,
+  clover,
+  home,
+  stairs,
+  stairsbox,
+  pentagon,
+  dice1,
+  dice2,
+  dice3,
+  dice4,
+  dice5,
+  dice6,
+} from "../../../assets/play";
+
+const IMAGES = {
+  Aces: dice1,
+  Duces: dice2,
+  Threes: dice3,
+  Fours: dice4,
+  Fives: dice5,
+  Sixes: dice6,
+
+  Choice: diamond,
+  "4 Of a Kind": clover,
+  "Full House": home,
+  "Small Straight": stairs,
+  "Large Straight": stairsbox,
+  Yacht: pentagon,
+};
+
+const getImage = (title) => {
+  return IMAGES[title];
+};
+
+export default function ({ title, myScore, rivalScore }) {
   return (
     <Container>
       <DiceContainer>
         <ImageContainer>
-          <Image source={image} />
+          <Image source={getImage(title)} />
         </ImageContainer>
         <TextContainer>
           <Text>{title}</Text>
         </TextContainer>
       </DiceContainer>
-      <MyScore>{myScore}</MyScore>
+      <MyScore>
+        <MyScoreText>{myScore}</MyScoreText>
+      </MyScore>
       <RivalScore>{rivalScore}</RivalScore>
     </Container>
   );
@@ -51,7 +88,17 @@ const MyScore = styled.View`
   flex: 1;
   border-width: 1px;
   background-color: #ffc000;
+  justify-content: center;
+  align-items: center;
 `;
+
+const MyScoreText = styled.Text`
+  color: gray;
+
+  font-size: 15px;
+  font-weight: bold;
+`;
+
 const RivalScore = styled.View`
   flex: 1;
   border-width: 1px;

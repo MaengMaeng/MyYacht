@@ -1,52 +1,35 @@
 import React from "react";
 import styled from "styled-components/native";
-import {
-  diamond,
-  clover,
-  home,
-  stairs,
-  stairsbox,
-  pentagon,
-  dice1,
-  dice2,
-  dice3,
-  dice4,
-  dice5,
-  dice6,
-} from "../../../assets/play";
 import { Pedigree, Total, Dice } from "../../components/Play";
-
+import { leftPedigreeTitles, rightPedigreeTitles } from "./PedigreeTitle";
 export default function ({
   isTurn,
   dices,
   holdDices,
   emitHoldDices,
   rollHandler,
+  myScore,
   submitHandler,
 }) {
   return (
     <Container>
       <PedigreeContainer>
         <PedigreeList>
-          <Pedigree title="Aces" image={dice1} />
-          <Pedigree title="Duces" image={dice2} />
-          <Pedigree title="Threes" image={dice3} />
-          <Pedigree title="Fours" image={dice4} />
-          <Pedigree title="Fives" image={dice5} />
-          <Pedigree title="Sixes" image={dice6} />
-
+          {leftPedigreeTitles.map((title) => (
+            <Pedigree title={title} myScore={myScore[title]} />
+          ))}
           <TotalContainer>
             <Total title="Bonus" myScore="2" rivalScore="50" />
           </TotalContainer>
         </PedigreeList>
 
         <PedigreeList>
-          <Pedigree title="Choice" image={diamond} />
-          <Pedigree title="4 Of a Kind" image={clover} />
-          <Pedigree title="Full House" image={home} />
-          <Pedigree title="Small Straight" image={stairs} />
-          <Pedigree title="Large Straight" image={stairsbox} />
-          <Pedigree title="Yacht" image={pentagon} />
+          {rightPedigreeTitles.map((title) => (
+            <>
+              {console.log(myScore[title])}
+              <Pedigree title={title} myScore={myScore[title]} />
+            </>
+          ))}
           <TotalContainer>
             <Total title="Total" myScore="133" rivalScore="350" />
           </TotalContainer>
