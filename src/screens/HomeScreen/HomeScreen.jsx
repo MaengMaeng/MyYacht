@@ -6,29 +6,36 @@ import {
   NORMAL_ICON,
   RANK_ICON,
 } from "../../../assets/home";
-import { Dimensions } from 'react-native';
+import { Dimensions } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
-import {userInfo} from '../../components/UserInfoModal/dummy';
-import {UserInfoModal} from '../../components/UserInfoModal/UserInfoModal';
+import { userInfo } from "../../components/UserInfoModal/dummy";
+import { UserInfoModal } from "../../components/UserInfoModal/UserInfoModal";
 
-const {width} = Dimensions.get("window");
+const { width } = Dimensions.get("window");
 
 export default function () {
   const [modalVisible, setModalVisible] = useState(false);
+  const navigation = useNavigation();
+
+  const navigateMatching = () => {
+    console.log("::M");
+    navigation.navigate("Matching");
+  };
 
   return (
     <ContainerView>
       <UserInfoModal
         addToFriend
-        {...{userInfo, modalVisible, setModalVisible}}
+        {...{ userInfo, modalVisible, setModalVisible }}
       ></UserInfoModal>
       <SectionView>
         <SectionText>SINGLE</SectionText>
         <PlayButton onPress={() => setModalVisible(true)}>
-          <PlayButtonImage source={PRACTICE_ICON} ></PlayButtonImage>
+          <PlayButtonImage source={PRACTICE_ICON}></PlayButtonImage>
           <PlayButtonText>Practice</PlayButtonText>
         </PlayButton>
-        <PlayButton>
+        <PlayButton onPress={navigateMatching}>
           <PlayButtonImage source={AI_ICON}></PlayButtonImage>
           <PlayButtonText>AI</PlayButtonText>
         </PlayButton>
@@ -38,12 +45,10 @@ export default function () {
         <SectionText>MULTI</SectionText>
         <PlayButton>
           <PlayButtonImage source={NORMAL_ICON}></PlayButtonImage>
-
           <PlayButtonText>Normal</PlayButtonText>
         </PlayButton>
         <PlayButton>
           <PlayButtonImage source={RANK_ICON}></PlayButtonImage>
-
           <PlayButtonText>Rank</PlayButtonText>
         </PlayButton>
       </SectionView>
@@ -84,8 +89,8 @@ const PlayButton = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
 
-  width: ${Math.floor(width * (30/100))}px;
-  height: ${Math.floor(width * (30/100))}px;
+  width: ${Math.floor(width * (30 / 100))}px;
+  height: ${Math.floor(width * (30 / 100))}px;
   margin: 5% 0 5% 0;
 
   border: 2px solid black;
@@ -93,8 +98,8 @@ const PlayButton = styled.TouchableOpacity`
 `;
 
 const PlayButtonImage = styled.Image`
-  height: ${Math.floor(width * (12/100))}px;
-  width: ${Math.floor(width * (12/100))}px;
+  height: ${Math.floor(width * (12 / 100))}px;
+  width: ${Math.floor(width * (12 / 100))}px;
 `;
 
 const PlayButtonText = styled.Text`
