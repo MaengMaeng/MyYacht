@@ -1,13 +1,20 @@
 import React from "react";
 import styled from "styled-components/native";
 import { ActivityIndicator } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 export const Matching = () => {
+  const navigation = useNavigation();
+
+  const matchingCancel = () => {
+    navigation.goBack();
+  }
+
   return (
     <ContainerView>
       <ActivityIndicator size="large" color="#fff"></ActivityIndicator>
       <MatchingText>게임을 찾는 중입니다.</MatchingText>
-      <CustomButton>
+      <CustomButton onPress={matchingCancel}>
         <ButtonText>취소</ButtonText>
       </CustomButton>
     </ContainerView>
