@@ -8,6 +8,7 @@ export default function ({
   holdDices,
   emitHoldDices,
   rollHandler,
+  rollCount,
   myScore,
   submitHandler,
 }) {
@@ -15,8 +16,8 @@ export default function ({
     <Container>
       <PedigreeContainer>
         <PedigreeList>
-          {leftPedigreeTitles.map((title) => (
-            <Pedigree title={title} myScore={myScore[title]} />
+          {leftPedigreeTitles.map((title, index) => (
+            <Pedigree key={index} title={title} myScore={myScore[title]} />
           ))}
           <TotalContainer>
             <Total title="Bonus" myScore="2" rivalScore="50" />
@@ -24,35 +25,39 @@ export default function ({
         </PedigreeList>
 
         <PedigreeList>
-          {rightPedigreeTitles.map((title) => (
-            <>
-              {console.log(myScore[title])}
-              <Pedigree title={title} myScore={myScore[title]} />
-            </>
+          {rightPedigreeTitles.map((title, index) => (
+            <Pedigree key={index} title={title} myScore={myScore[title]} />
           ))}
           <TotalContainer>
             <Total title="Total" myScore="133" rivalScore="350" />
           </TotalContainer>
         </PedigreeList>
       </PedigreeContainer>
+      <RollCountContainer>
+        <RollCountText> {3 - rollCount} remains </RollCountText>
+      </RollCountContainer>
       <DiceContainer>
         {dices.map((value, index) => (
           <Dice
+            disabled={!isTurn || rollCount === 0}
             key={index}
             hold={holdDices[index]}
             value={value}
-            isTurn={isTurn}
             onPress={() => emitHoldDices(index)}
           />
         ))}
       </DiceContainer>
       <ButtonContainer>
-        <Button disabled={!isTurn} onPress={rollHandler}>
+        <Button disabled={!isTurn || rollCount === 3} onPress={rollHandler}>
           <ButtonText>Roll</ButtonText>
         </Button>
-        <Button disabled={!isTurn} onPress={submitHandler}>
-          <ButtonText>Submit</ButtonText>
-        </Button>
+        {rollCount !== 0 ? (
+          <Button disabled={!isTurn} onPress={submitHandler}>
+            <ButtonText>Submit</ButtonText>
+          </Button>
+        ) : (
+          <></>
+        )}
       </ButtonContainer>
     </Container>
   );
@@ -83,12 +88,23 @@ const DiceContainer = styled.View`
   align-items: center;
   justify-content: center;
 `;
+
+const RollCountContainer = styled.View`
+  flex: 0.5;
+  margin-horizontal: 10px;
+`;
+
+const RollCountText = styled.Text`
+  text-align: right;
+`;
+
 const ButtonContainer = styled.View`
   flex: 1;
   flex-direction: row;
   margin-vertical: 20px;
   margin-horizontal: 10px;
 `;
+// visibility: ${(props) => (props.isTurn ? "visible " : "hidden")};
 
 const Button = styled.TouchableOpacity`
   flex: 1;
@@ -97,6 +113,9 @@ const Button = styled.TouchableOpacity`
   border-width: 2px;
   border-radius: 5px;
   margin-horizontal: 20px;
+  opacity: ${(props) => (props.disabled ? 0.5 : 1)};
+  background-color: ${(props) => (props.disabled ? "#cccccc" : "#F9F9F9")};
 `;
 
 const ButtonText = styled.Text``;
+// background-color: white;

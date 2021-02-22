@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { BackHandler, StatusBar } from "react-native";
 import { io } from "socket.io-client";
+import * as config from "../../../config";
 
 import PlayScreenPresenter from "./PlayScreenPresenter";
 let socket;
@@ -17,6 +18,7 @@ export default function () {
   ]);
   const [dices, setDices] = useState([1, 2, 3, 4, 5]);
   const [myScore, setMyScore] = useState({});
+  const [rollCount, setRollCount] = useState(0);
 
   const emitHoldDices = (number) => {
     let dices = holdDices.slice();
@@ -31,11 +33,12 @@ export default function () {
     const data = new Object();
     data.dices = dices;
     data.holddDices = holdDices;
+    data.rollCount = rollCount;
     socket.emit("roll", data);
   };
 
   const submitHandler = () => {
-    socket.emit("next_turn");
+    socket.emit("submit");
   };
 
   const backAction = () => {
@@ -47,17 +50,22 @@ export default function () {
     // status bar hidden
     StatusBar.setHidden(true);
 
-    socket = io("http://172.23.208.1:8080");
+    socket = io(config.SERVER_URL);
 
     socket.on("pre_calcurate", (data) => {
       setMyScore(data);
     });
 
+    // roll dices
     socket.on("roll", (data) => {
       setDices(data);
     });
 
-    socket.on("next_turn", (data) => {
+    socket.on("roll_count", (data) => {
+      setRollCount(data);
+    });
+
+    socket.on("submit", (data) => {
       setIsTurn(data);
     });
 
@@ -80,6 +88,7 @@ export default function () {
         holdDices,
         emitHoldDices,
         rollHandler,
+        rollCount,
         myScore,
         submitHandler,
       }}

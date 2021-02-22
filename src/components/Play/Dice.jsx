@@ -15,9 +15,9 @@ const getImage = (num) => {
   return IMAGES["image" + num];
 };
 
-export default function ({ isTurn, value, hold, onPress }) {
+export default function ({ disabled, value, hold, onPress }) {
   return (
-    <Dice disabled={!isTurn} hold={hold} onPress={onPress}>
+    <Dice disabled={disabled} hold={hold} onPress={onPress}>
       <DiceImage source={getImage(value)} />
     </Dice>
   );
