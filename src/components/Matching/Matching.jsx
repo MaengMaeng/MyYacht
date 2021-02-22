@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components/native";
 import { ActivityIndicator } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { socket, connectSocket } from "../../socket";
 
 export const Matching = () => {
   const navigation = useNavigation();
 
   const matchingCancel = () => {
+    socket.emit("matchingCancel");
     navigation.goBack();
-  }
+  };
 
   return (
     <ContainerView>

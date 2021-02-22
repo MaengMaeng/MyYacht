@@ -19,8 +19,7 @@ export default function () {
   const navigation = useNavigation();
 
   const navigateMatching = () => {
-    console.log("::M");
-    navigation.navigate("Matching");
+    navigation.push("Play");
   };
 
   return (

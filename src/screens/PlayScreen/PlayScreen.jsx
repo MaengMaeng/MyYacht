@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Text, BackHandler, StatusBar } from "react-native";
 import styled from "styled-components/native";
-import {io} from 'socket.io-client';
-import * as config from '../../../config';
+import { socket, connectSocket } from "../../socket";
 
 import {
   diamond,
@@ -19,18 +18,24 @@ import {
   dice6,
 } from "../../../assets/play";
 import { Pedigree, Total } from "../../components/Play";
-
-let socket;
+import {Matching} from '../../components/Matching/Matching';
 
 export default function () {
-  const [holdDices, setHoldDices] = useState([false, false, false, false, false]);
+  const [holdDices, setHoldDices] = useState([
+    false,
+    false,
+    false,
+    false,
+    false,
+  ]);
+  const [isMatched, setIsMatched] = useState(false);
 
   const emitHoldDices = (number) => {
     let dices = holdDices.slice();
     dices[number] = !dices[number];
 
-    socket.emit('hold', dices);
-  }
+    socket.emit("hold", dices);
+  };
 
   const backAction = () => {
     return true;
@@ -40,12 +45,20 @@ export default function () {
     BackHandler.addEventListener("hardwareBackPress", backAction);
     // status bar hidden
     StatusBar.setHidden(true);
+    
+    if (!socket) {
+      connectSocket();
+    }
 
-    socket = io(config.SERVER_URL);
+    socket.emit("matching");
 
-    socket.on('hold', (data) => {
+    socket.on("hold", (data) => {
       setHoldDices(data);
-    })
+    });
+
+    socket.on('matched', (data) => {
+      setIsMatched(true);
+    });
 
     // WillUnmount
     return () => {
@@ -54,61 +67,66 @@ export default function () {
     };
   }, []);
 
-  return (
-    <Container>
-      <PedigreeContainer>
-        <PedigreeList>
-          <Pedigree title="Aces" image={dice1} />
-          <Pedigree title="Duces" image={dice2} />
-          <Pedigree title="Threes" image={dice3} />
-          <Pedigree title="Fours" image={dice4} />
-          <Pedigree title="Fives" image={dice5} />
-          <Pedigree title="Sixes" image={dice6} />
-
-          <TotalContainer>
-            <Total title="Bonus" myScore="2" rivalScore="50" />
-          </TotalContainer>
-        </PedigreeList>
-
-        <PedigreeList>
-          <Pedigree title="Choice" image={diamond} />
-          <Pedigree title="4 Of a Kind" image={clover} />
-          <Pedigree title="Full House" image={home} />
-          <Pedigree title="Small Straight" image={stairs} />
-          <Pedigree title="Large Straight" image={stairsbox} />
-          <Pedigree title="Yacht" image={pentagon} />
-          <TotalContainer>
-            <Total title="Total" myScore="133" rivalScore="350" />
-          </TotalContainer>
-        </PedigreeList>
-      </PedigreeContainer>
-      <DiceContainer>
-        <Dice hold={holdDices[0]} onPress={() => emitHoldDices(0)}>
-          <DiceImage source={dice1} />
-        </Dice>
-        <Dice hold={holdDices[1]} onPress={() => emitHoldDices(1)}>
-          <DiceImage source={dice2} />
-        </Dice>
-        <Dice hold={holdDices[2]}  onPress={() => emitHoldDices(2)}>
-          <DiceImage source={dice3} />
-        </Dice>
-        <Dice hold={holdDices[3]} onPress={() => emitHoldDices(3)}>
-          <DiceImage source={dice4} />
-        </Dice>
-        <Dice hold={holdDices[4]} onPress={() => emitHoldDices(4)}>
-          <DiceImage source={dice5} />
-        </Dice>
-      </DiceContainer>
-      <ButtonContainer>
-        <Button>
-          <Text>Roll</Text>
-        </Button>
-        <Button>
-          <Text>Submit</Text>
-        </Button>
-      </ButtonContainer>
-    </Container>
-  );
+  if(!isMatched){
+    return <Matching/>;
+  }
+  else{
+    return (
+      <Container>
+        <PedigreeContainer>
+          <PedigreeList>
+            <Pedigree title="Aces" image={dice1} />
+            <Pedigree title="Duces" image={dice2} />
+            <Pedigree title="Threes" image={dice3} />
+            <Pedigree title="Fours" image={dice4} />
+            <Pedigree title="Fives" image={dice5} />
+            <Pedigree title="Sixes" image={dice6} />
+  
+            <TotalContainer>
+              <Total title="Bonus" myScore="2" rivalScore="50" />
+            </TotalContainer>
+          </PedigreeList>
+  
+          <PedigreeList>
+            <Pedigree title="Choice" image={diamond} />
+            <Pedigree title="4 Of a Kind" image={clover} />
+            <Pedigree title="Full House" image={home} />
+            <Pedigree title="Small Straight" image={stairs} />
+            <Pedigree title="Large Straight" image={stairsbox} />
+            <Pedigree title="Yacht" image={pentagon} />
+            <TotalContainer>
+              <Total title="Total" myScore="133" rivalScore="350" />
+            </TotalContainer>
+          </PedigreeList>
+        </PedigreeContainer>
+        <DiceContainer>
+          <Dice hold={holdDices[0]} onPress={() => emitHoldDices(0)}>
+            <DiceImage source={dice1} />
+          </Dice>
+          <Dice hold={holdDices[1]} onPress={() => emitHoldDices(1)}>
+            <DiceImage source={dice2} />
+          </Dice>
+          <Dice hold={holdDices[2]} onPress={() => emitHoldDices(2)}>
+            <DiceImage source={dice3} />
+          </Dice>
+          <Dice hold={holdDices[3]} onPress={() => emitHoldDices(3)}>
+            <DiceImage source={dice4} />
+          </Dice>
+          <Dice hold={holdDices[4]} onPress={() => emitHoldDices(4)}>
+            <DiceImage source={dice5} />
+          </Dice>
+        </DiceContainer>
+        <ButtonContainer>
+          <Button>
+            <Text>Roll</Text>
+          </Button>
+          <Button>
+            <Text>Submit</Text>
+          </Button>
+        </ButtonContainer>
+      </Container>
+    );
+  }
 }
 
 const Container = styled.View`
@@ -141,7 +159,7 @@ const Dice = styled.TouchableOpacity`
   flex: 1;
   align-items: center;
   justify-content: center;
-  border: ${props => props.hold ? '2px solid black' : '2px solid white'};
+  border: ${(props) => (props.hold ? "2px solid black" : "2px solid white")};
   border-radius: 8px;
 `;
 
