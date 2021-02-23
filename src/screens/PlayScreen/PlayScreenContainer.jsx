@@ -61,16 +61,16 @@ export default function () {
       setIsMatched(true);
     });
 
-    socket.on("pre_calcurate", (data) => {
+    socket.on("preCalculate", (data) => {
       setMyScore(data);
     });
 
     // roll dices
-    socket.on("roll", (data) => {
+    socket.on("rollDices", (data) => {
       setDices(data);
     });
 
-    socket.on("roll_count", (data) => {
+    socket.on("countRolls", (data) => {
       setRollCount(data);
     });
 
