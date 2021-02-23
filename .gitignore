@@ -15,3 +15,4 @@ web-build/
 # template
 .github
 .vscode
+config.js

@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { BackHandler, StatusBar } from "react-native";
-import { io } from "socket.io-client";
-import * as config from "../../../config";
 
+import { socket, connectSocket } from "../../socket";
 import PlayScreenPresenter from "./PlayScreenPresenter";
-let socket;
+import { Matching } from "../../components/Matching/Matching";
 
 export default function () {
-  console.log(socket);
+  const [isMatched, setIsMatched] = useState(false);
   const [isTurn, setIsTurn] = useState(false);
   const [holdDices, setHoldDices] = useState([
     false,
@@ -23,8 +22,6 @@ export default function () {
   const emitHoldDices = (number) => {
     let dices = holdDices.slice();
     dices[number] = !dices[number];
-
-    console.log("hold", dices);
 
     socket.emit("hold", dices);
   };
@@ -50,7 +47,19 @@ export default function () {
     // status bar hidden
     StatusBar.setHidden(true);
 
-    socket = io(config.SERVER_URL);
+    if (!socket) {
+      connectSocket();
+    }
+
+    socket.emit("matching");
+
+    socket.on("hold", (data) => {
+      setHoldDices(data);
+    });
+
+    socket.on("matched", (data) => {
+      setIsMatched(true);
+    });
 
     socket.on("pre_calcurate", (data) => {
       setMyScore(data);
@@ -69,10 +78,6 @@ export default function () {
       setIsTurn(data);
     });
 
-    socket.on("hold", (data) => {
-      setHoldDices(data);
-    });
-
     // WillUnmount
     return () => {
       BackHandler.removeEventListener("hardwareBackPress", backAction);
@@ -80,18 +85,22 @@ export default function () {
     };
   }, []);
 
-  return (
-    <PlayScreenPresenter
-      {...{
-        isTurn,
-        dices,
-        holdDices,
-        emitHoldDices,
-        rollHandler,
-        rollCount,
-        myScore,
-        submitHandler,
-      }}
-    />
-  );
+  if (!isMatched) {
+    return <Matching />;
+  } else {
+    return (
+      <PlayScreenPresenter
+        {...{
+          isTurn,
+          dices,
+          holdDices,
+          emitHoldDices,
+          rollHandler,
+          rollCount,
+          myScore,
+          submitHandler,
+        }}
+      />
+    );
+  }
 }
