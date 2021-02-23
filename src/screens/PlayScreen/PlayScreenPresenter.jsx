@@ -33,19 +33,30 @@ export default function ({
           </TotalContainer>
         </PedigreeList>
       </PedigreeContainer>
-      <RollCountContainer>
+      <TextContainer>
+        <TurnText> {isTurn ? "내 차례" : "상대 차례"} </TurnText>
         <RollCountText> {3 - rollCount} remains </RollCountText>
-      </RollCountContainer>
+      </TextContainer>
       <DiceContainer>
-        {dices.map((value, index) => (
-          <Dice
-            disabled={!isTurn || rollCount === 0}
-            key={index}
-            hold={holdDices[index]}
-            value={value}
-            onPress={() => emitHoldDices(index)}
-          />
-        ))}
+        {rollCount === 0 ? (
+          <>
+            <DiceText>
+              {isTurn ? "주사위를 굴려주세요" : "상대 차례입니다"}
+            </DiceText>
+          </>
+        ) : (
+          <>
+            {dices.map((value, index) => (
+              <Dice
+                disabled={!isTurn || rollCount === 0}
+                key={index}
+                hold={holdDices[index]}
+                value={value}
+                onPress={() => emitHoldDices(index)}
+              />
+            ))}
+          </>
+        )}
       </DiceContainer>
       <ButtonContainer>
         <Button disabled={!isTurn || rollCount === 3} onPress={rollHandler}>
@@ -89,14 +100,19 @@ const DiceContainer = styled.View`
   justify-content: center;
 `;
 
-const RollCountContainer = styled.View`
-  flex: 0.5;
-  margin-horizontal: 10px;
+const DiceText = styled.Text`
+  font-size: 24px;
+  font-weight: bold;
 `;
 
-const RollCountText = styled.Text`
-  text-align: right;
+const TextContainer = styled.View`
+  flex-direction: row;
+  flex: 0.5;
+  justify-content: space-between;
+  margin-horizontal: 10px;
 `;
+const TurnText = styled.Text``;
+const RollCountText = styled.Text``;
 
 const ButtonContainer = styled.View`
   flex: 1;
@@ -104,7 +120,6 @@ const ButtonContainer = styled.View`
   margin-vertical: 20px;
   margin-horizontal: 10px;
 `;
-// visibility: ${(props) => (props.isTurn ? "visible " : "hidden")};
 
 const Button = styled.TouchableOpacity`
   flex: 1;
@@ -118,4 +133,3 @@ const Button = styled.TouchableOpacity`
 `;
 
 const ButtonText = styled.Text``;
-// background-color: white;
