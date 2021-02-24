@@ -17,7 +17,9 @@ export default function () {
   ]);
   const [dices, setDices] = useState([1, 2, 3, 4, 5]);
   const [myScore, setMyScore] = useState({});
+  const [rivalScore, setRivalScore] = useState({});
   const [rollCount, setRollCount] = useState(0);
+  const [holdPedigreeTitle, setHoldPedigreeTitle] = useState("");
 
   const emitHoldDices = (number) => {
     let dices = holdDices.slice();
@@ -34,6 +36,9 @@ export default function () {
     socket.emit("roll", data);
   };
 
+  const holdPedigreeHandler = (title) => {
+    socket.emit("holdPedigree", title);
+  };
   const submitHandler = () => {
     socket.emit("submit");
   };
@@ -53,25 +58,29 @@ export default function () {
 
     socket.emit("matching");
 
-    socket.on("hold", (data) => {
-      setHoldDices(data);
-    });
-
     socket.on("matched", (data) => {
       setIsMatched(true);
     });
 
-    socket.on("preCalculate", (data) => {
-      setMyScore(data);
-    });
-
-    // roll dices
+    // roll
     socket.on("rollDices", (data) => {
       setDices(data);
     });
-
     socket.on("countRolls", (data) => {
       setRollCount(data);
+    });
+    socket.on("preCalculateMyScore", (data) => {
+      setMyScore(data);
+    });
+    socket.on("preCalculateRivalScore", (data) => {
+      setRivalScore(data);
+    });
+
+    socket.on("hold", (data) => {
+      setHoldDices(data);
+    });
+    socket.on("holdPedigree", (data) => {
+      setHoldPedigreeTitle(data);
     });
 
     socket.on("submit", (data) => {
@@ -93,11 +102,14 @@ export default function () {
         {...{
           isTurn,
           dices,
-          holdDices,
-          emitHoldDices,
-          rollHandler,
           rollCount,
           myScore,
+          rivalScore,
+          holdDices,
+          holdPedigreeTitle,
+          holdPedigreeHandler,
+          rollHandler,
+          emitHoldDices,
           submitHandler,
         }}
       />

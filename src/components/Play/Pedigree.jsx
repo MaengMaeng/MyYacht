@@ -36,7 +36,15 @@ const getImage = (title) => {
   return IMAGES[title];
 };
 
-export default function ({ title, myScore, rivalScore }) {
+export default function ({
+  title,
+  myScore,
+  rivalScore,
+  isTurn,
+  holdabled,
+  holdPedigreeHandler,
+  hold,
+}) {
   return (
     <Container>
       <DiceContainer>
@@ -47,10 +55,17 @@ export default function ({ title, myScore, rivalScore }) {
           <Text>{title}</Text>
         </TextContainer>
       </DiceContainer>
-      <MyScore>
-        <MyScoreText>{myScore}</MyScoreText>
-      </MyScore>
-      <RivalScore>{rivalScore}</RivalScore>
+      <ScoreContainer
+        disabled={!holdabled}
+        onPress={() => holdPedigreeHandler(title)}
+        hold={hold && isTurn}
+        yellow
+      >
+        <ScoreText> {myScore} </ScoreText>
+      </ScoreContainer>
+      <ScoreContainer disabled={true} hold={hold && !isTurn}>
+        <ScoreText> {rivalScore} </ScoreText>
+      </ScoreContainer>
     </Container>
   );
 }
@@ -59,12 +74,12 @@ const Container = styled.View`
   flex: 1;
   flex-direction: row;
   margin-vertical: 1px;
+  border-width: 1px;
 `;
 const DiceContainer = styled.View`
   flex: 2;
   flex-direction: row;
   justify-content: flex-start;
-  border-width: 1px;
 `;
 const ImageContainer = styled.View`
   align-items: center;
@@ -84,22 +99,17 @@ const TextContainer = styled.View`
 const Text = styled.Text`
   font-size: 13px;
 `;
-const MyScore = styled.View`
+const ScoreContainer = styled.TouchableOpacity`
   flex: 1;
-  border-width: 1px;
-  background-color: #ffc000;
+  border-width: ${(props) => (props.hold ? "2px" : "")};
+  background-color: ${(props) => (props.yellow ? "#ffc000" : "")};
   justify-content: center;
   align-items: center;
 `;
 
-const MyScoreText = styled.Text`
+const ScoreText = styled.Text`
   color: gray;
 
   font-size: 15px;
   font-weight: bold;
-`;
-
-const RivalScore = styled.View`
-  flex: 1;
-  border-width: 1px;
 `;

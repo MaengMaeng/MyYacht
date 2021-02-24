@@ -5,11 +5,14 @@ import { leftPedigreeTitles, rightPedigreeTitles } from "./PedigreeTitle";
 export default function ({
   isTurn,
   dices,
-  holdDices,
-  emitHoldDices,
-  rollHandler,
   rollCount,
   myScore,
+  rivalScore,
+  holdDices,
+  holdPedigreeTitle,
+  holdPedigreeHandler,
+  rollHandler,
+  emitHoldDices,
   submitHandler,
 }) {
   return (
@@ -17,7 +20,16 @@ export default function ({
       <PedigreeContainer>
         <PedigreeList>
           {leftPedigreeTitles.map((title, index) => (
-            <Pedigree key={index} title={title} myScore={myScore[title]} />
+            <Pedigree
+              key={index}
+              isTurn={isTurn}
+              title={title}
+              myScore={myScore[title]}
+              rivalScore={rivalScore[title]}
+              holdabled={isTurn && rollCount !== 0}
+              holdPedigreeHandler={holdPedigreeHandler}
+              hold={title === holdPedigreeTitle}
+            />
           ))}
           <TotalContainer>
             <Total title="Bonus" myScore="2" rivalScore="50" />
@@ -26,7 +38,16 @@ export default function ({
 
         <PedigreeList>
           {rightPedigreeTitles.map((title, index) => (
-            <Pedigree key={index} title={title} myScore={myScore[title]} />
+            <Pedigree
+              key={index}
+              isTurn={isTurn}
+              title={title}
+              myScore={myScore[title]}
+              rivalScore={rivalScore[title]}
+              holdabled={isTurn && rollCount !== 0}
+              holdPedigreeHandler={holdPedigreeHandler}
+              hold={title === holdPedigreeTitle}
+            />
           ))}
           <TotalContainer>
             <Total title="Total" myScore="133" rivalScore="350" />
@@ -63,7 +84,10 @@ export default function ({
           <ButtonText>Roll</ButtonText>
         </Button>
         {rollCount !== 0 ? (
-          <Button disabled={!isTurn} onPress={submitHandler}>
+          <Button
+            disabled={!isTurn || holdPedigreeTitle === ""}
+            onPress={submitHandler}
+          >
             <ButtonText>Submit</ButtonText>
           </Button>
         ) : (
