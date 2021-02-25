@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components/native";
+import {PedigreeInfos} from './PedigreeTitle';
 
 import {
   diamond,
@@ -49,10 +50,10 @@ export default function ({visible, title}) {
         </TextContainer>
 			</TitleView>
 			<InfoView>
-				<Text>설명 어쩌고 저쩌s고설명 어쩌고 저쩌고설명 어쩌고 저쩌고설명 어쩌고 저쩌고설명 어쩌고 저쩌고설명 어쩌고 저쩌고설명 어쩌고 저쩌고설명 어쩌고 저쩌고</Text>
+				<InfoText>{PedigreeInfos[title]}</InfoText>
 			</InfoView>
 			<ExamView>
-				<Text>예시1) ㅁㄴ아ㅓㄴㅇ리ㅏㅓㅁ니;ㅏㅇ러ㅣㅏ;ㅁㄴ어리;ㅏㅁ넝리ㅏ;ㄴ멍리ㅏ;먼리ㅏ;ㅓㅇㄴ미;ㅏ럼니;ㅏ러ㅣㅏㄴ;ㅁ어리ㅏ;ㄴㅇ머리ㅏㄴ어;ㄹ</Text>
+				<InfoText></InfoText>
 			</ExamView>
 		</Container>
 		);
@@ -114,4 +115,9 @@ const TextContainer = styled.View`
 `;
 const Text = styled.Text`
   font-size: 18px;
+`;
+
+const InfoText = styled.Text`
+  font-size: 14px;
+  margin: 4px;
 `;
