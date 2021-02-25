@@ -18,6 +18,21 @@ export default function () {
   const [dices, setDices] = useState([1, 2, 3, 4, 5]);
   const [myScore, setMyScore] = useState({});
   const [rollCount, setRollCount] = useState(0);
+  const [lVisible, setLVisible] = useState(false);
+  const [lPTitle, setLPTitle] = useState(null);
+  const [rVisible, setRVisible] = useState(false);
+  const [rPTitle, setRPTitle] = useState(null);
+
+  const setProps = (left, visible, title) => {
+    if(left){
+      setLVisible(visible);
+      setLPTitle(title);
+    }
+    else{
+      setRVisible(visible);
+      setRPTitle(title);
+    }
+  };
 
   const emitHoldDices = (number) => {
     let dices = holdDices.slice();
@@ -99,6 +114,11 @@ export default function () {
           rollCount,
           myScore,
           submitHandler,
+          lVisible,
+          rVisible,
+          lPTitle,
+          rPTitle,
+          setProps
         }}
       />
     );

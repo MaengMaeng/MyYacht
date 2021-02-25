@@ -13,22 +13,13 @@ export default function ({
   rollCount,
   myScore,
   submitHandler,
+  lVisible,
+  rVisible,
+  lPTitle,
+  rPTitle,
+  setProps
 }) {
-  const [lVisible, setLVisible] = useState(false);
-  const [lPTitle, setLPTitle] = useState(null);
-  const [rVisible, setRVisible] = useState(false);
-  const [rPTitle, setRPTitle] = useState(null);
 
-  const setProps = (left, visible, title) => {
-    if(left){
-      setLVisible(visible);
-      setLPTitle(title);
-    }
-    else{
-      setRVisible(visible);
-      setRPTitle(title);
-    }
-  };
 
   return (
     <Container>
