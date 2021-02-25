@@ -6,7 +6,7 @@ import PlayScreenPresenter from "./PlayScreenPresenter";
 import { Matching } from "../../components/Matching/Matching";
 
 export default function () {
-  const [isMatched, setIsMatched] = useState(false);
+  const [isMatched, setIsMatched] = useState(true);
   const [isTurn, setIsTurn] = useState(false);
   const [holdDices, setHoldDices] = useState([
     false,

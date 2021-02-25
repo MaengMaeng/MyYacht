@@ -36,10 +36,10 @@ const getImage = (title) => {
   return IMAGES[title];
 };
 
-export default function ({ title, myScore, rivalScore }) {
+export default function ({ title, myScore, rivalScore, onLongPress, onPressOut }) {
   return (
     <Container>
-      <DiceContainer>
+      <DiceContainer onPressIn={onLongPress} onPressOut={onPressOut}>
         <ImageContainer>
           <Image source={getImage(title)} />
         </ImageContainer>
@@ -60,7 +60,7 @@ const Container = styled.View`
   flex-direction: row;
   margin-vertical: 1px;
 `;
-const DiceContainer = styled.View`
+const DiceContainer = styled.TouchableOpacity`
   flex: 2;
   flex-direction: row;
   justify-content: flex-start;
