@@ -21,6 +21,20 @@ export default function () {
   const [rivalScore, setRivalScore] = useState({});
   const [rollCount, setRollCount] = useState(0);
   const [holdPedigreeTitle, setHoldPedigreeTitle] = useState("");
+  const [lVisible, setLVisible] = useState(false);
+  const [lPTitle, setLPTitle] = useState(null);
+  const [rVisible, setRVisible] = useState(false);
+  const [rPTitle, setRPTitle] = useState(null);
+
+  const setProps = (left, visible, title) => {
+    if (left) {
+      setLVisible(visible);
+      setLPTitle(title);
+    } else {
+      setRVisible(visible);
+      setRPTitle(title);
+    }
+  };
 
   const emitHoldDices = (number) => {
     let dices = holdDices.slice();
@@ -63,22 +77,6 @@ export default function () {
     socket.on("rollDices", (data) => {
       setDices(data);
       // 족보 계산값
-      // const counts = pc.makeCountArray(data);
-      // const calculatedData = {
-      //   Aces: pc.calSingle(counts, 1),
-      //   Duces: pc.calSingle(counts, 2),
-      //   Threes: pc.calSingle(counts, 3),
-      //   Fours: pc.calSingle(counts, 4),
-      //   Fives: pc.calSingle(counts, 5),
-      //   Sixes: pc.calSingle(counts, 6),
-      //   Choice: pc.calSum(counts),
-      //   "4 Of a Kind": pc.cal4OfAKind(counts),
-      //   "Full House": pc.calFullHouse(counts),
-      //   "Small Straight": pc.calSmallStraight(counts),
-      //   "Large Straight": pc.calLargeStraight(counts),
-      //   Yacht: pc.calYatch(counts),
-      // };
-      // setMyScore(calculatedData);
     });
     socket.on("countRolls", (data) => {
       setRollCount(data);
@@ -127,6 +125,11 @@ export default function () {
           rollHandler,
           emitHoldDices,
           submitHandler,
+          lVisible,
+          rVisible,
+          lPTitle,
+          rPTitle,
+          setProps,
         }}
       />
     );

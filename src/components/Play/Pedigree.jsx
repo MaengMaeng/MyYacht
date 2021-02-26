@@ -47,10 +47,12 @@ export default function ({
   hold,
   dices,
   rollCount,
+  onLongPress,
+  onPressOut,
 }) {
   return (
     <Container>
-      <DiceContainer>
+      <DiceContainer onPressIn={onLongPress} onPressOut={onPressOut}>
         <ImageContainer>
           <Image source={getImage(title)} />
         </ImageContainer>
@@ -87,7 +89,7 @@ const Container = styled.View`
   margin-vertical: 1px;
   border-width: 1px;
 `;
-const DiceContainer = styled.View`
+const DiceContainer = styled.TouchableOpacity`
   flex: 2;
   flex-direction: row;
   justify-content: flex-start;
@@ -112,14 +114,14 @@ const Text = styled.Text`
 `;
 const ScoreContainer = styled.TouchableOpacity`
   flex: 1;
-  border-width: ${(props) => (props.hold ? "2px" : "")};
-  background-color: ${(props) => (props.yellow ? "#ffc000" : "")};
+  border-width: ${(props) => (props.hold ? "2px" : "0px")};
+  background-color: ${(props) => (props.yellow ? "#ffc000" : "white")};
   justify-content: center;
   align-items: center;
 `;
 
 const ScoreText = styled.Text`
-  color: ${(props) => (props.gray ? "gray" : "")};
+  color: ${(props) => (props.gray ? "gray" : "black")};
   font-size: 15px;
   font-weight: bold;
 `;

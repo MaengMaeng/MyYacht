@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components/native";
 import { Pedigree, Total, Dice } from "../../components/Play";
 import { leftPedigreeTitles, rightPedigreeTitles } from "./PedigreeTitle";
+import PedigreeInfo from "./PedigreeInfo";
+
 export default function ({
   isTurn,
   dices,
@@ -14,6 +16,11 @@ export default function ({
   rollHandler,
   emitHoldDices,
   submitHandler,
+  lVisible,
+  rVisible,
+  lPTitle,
+  rPTitle,
+  setProps,
 }) {
   return (
     <Container>
@@ -31,11 +38,16 @@ export default function ({
               hold={title === holdPedigreeTitle}
               dices={dices}
               rollCount={rollCount}
+              onLongPress={() => setProps(false, true, title)}
+              onPressOut={() => setProps(false, false, null)}
             />
           ))}
           <TotalContainer>
             <Total title="Bonus" myScore="2" rivalScore="50" />
           </TotalContainer>
+          <PedigreeInfo
+            {...{ visible: lVisible, title: lPTitle }}
+          ></PedigreeInfo>
         </PedigreeList>
 
         <PedigreeList>
@@ -51,11 +63,17 @@ export default function ({
               hold={title === holdPedigreeTitle}
               rollCount={rollCount}
               dices={dices}
+              onLongPress={() => setProps(true, true, title)}
+              onPressOut={() => setProps(true, false, null)}
             />
           ))}
           <TotalContainer>
             <Total title="Total" myScore="133" rivalScore="350" />
           </TotalContainer>
+
+          <PedigreeInfo
+            {...{ visible: rVisible, title: rPTitle }}
+          ></PedigreeInfo>
         </PedigreeList>
       </PedigreeContainer>
       <TextContainer>
