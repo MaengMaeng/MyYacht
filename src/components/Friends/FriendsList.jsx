@@ -34,6 +34,7 @@ export default function ({ friendsList, tabNumber }) {
   };
 
   const navigatePlay = () => {
+    console.log("::L");
     navigation.navigate("Play");
   };
   return (

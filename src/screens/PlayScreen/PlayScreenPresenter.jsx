@@ -7,21 +7,20 @@ import PedigreeInfo from "./PedigreeInfo";
 export default function ({
   isTurn,
   dices,
+  holdDices,
+  emitHoldDices,
+  rollHandler,
   rollCount,
   myScore,
-  rivalScore,
-  holdDices,
-  holdPedigreeTitle,
-  holdPedigreeHandler,
-  rollHandler,
-  emitHoldDices,
   submitHandler,
   lVisible,
   rVisible,
   lPTitle,
   rPTitle,
-  setProps,
+  setProps
 }) {
+
+
   return (
     <Container>
       <PedigreeContainer>
@@ -29,15 +28,8 @@ export default function ({
           {leftPedigreeTitles.map((title, index) => (
             <Pedigree
               key={index}
-              isTurn={isTurn}
               title={title}
               myScore={myScore[title]}
-              rivalScore={rivalScore[title]}
-              holdabled={isTurn && rollCount !== 0 && !myScore[title]}
-              holdPedigreeHandler={holdPedigreeHandler}
-              hold={title === holdPedigreeTitle}
-              dices={dices}
-              rollCount={rollCount}
               onLongPress={() => setProps(false, true, title)}
               onPressOut={() => setProps(false, false, null)}
             />
@@ -54,15 +46,8 @@ export default function ({
           {rightPedigreeTitles.map((title, index) => (
             <Pedigree
               key={index}
-              isTurn={isTurn}
               title={title}
               myScore={myScore[title]}
-              rivalScore={rivalScore[title]}
-              holdabled={isTurn && rollCount !== 0 && !myScore[title]}
-              holdPedigreeHandler={holdPedigreeHandler}
-              hold={title === holdPedigreeTitle}
-              rollCount={rollCount}
-              dices={dices}
               onLongPress={() => setProps(true, true, title)}
               onPressOut={() => setProps(true, false, null)}
             />
@@ -76,40 +61,26 @@ export default function ({
           ></PedigreeInfo>
         </PedigreeList>
       </PedigreeContainer>
-      <TextContainer>
-        <TurnText> {isTurn ? "내 차례" : "상대 차례"} </TurnText>
+      <RollCountContainer>
         <RollCountText> {3 - rollCount} remains </RollCountText>
-      </TextContainer>
+      </RollCountContainer>
       <DiceContainer>
-        {rollCount === 0 ? (
-          <>
-            <DiceText>
-              {isTurn ? "주사위를 굴려주세요" : "상대 차례입니다"}
-            </DiceText>
-          </>
-        ) : (
-          <>
-            {dices.map((value, index) => (
-              <Dice
-                disabled={!isTurn || rollCount === 0}
-                key={index}
-                hold={holdDices[index]}
-                value={value}
-                onPress={() => emitHoldDices(index)}
-              />
-            ))}
-          </>
-        )}
+        {dices.map((value, index) => (
+          <Dice
+            disabled={!isTurn || rollCount === 0}
+            key={index}
+            hold={holdDices[index]}
+            value={value}
+            onPress={() => emitHoldDices(index)}
+          />
+        ))}
       </DiceContainer>
       <ButtonContainer>
         <Button disabled={!isTurn || rollCount === 3} onPress={rollHandler}>
           <ButtonText>Roll</ButtonText>
         </Button>
         {rollCount !== 0 ? (
-          <Button
-            disabled={!isTurn || holdPedigreeTitle === ""}
-            onPress={submitHandler}
-          >
+          <Button disabled={!isTurn} onPress={submitHandler}>
             <ButtonText>Submit</ButtonText>
           </Button>
         ) : (
@@ -146,19 +117,14 @@ const DiceContainer = styled.View`
   justify-content: center;
 `;
 
-const DiceText = styled.Text`
-  font-size: 24px;
-  font-weight: bold;
-`;
-
-const TextContainer = styled.View`
-  flex-direction: row;
+const RollCountContainer = styled.View`
   flex: 0.5;
-  justify-content: space-between;
   margin-horizontal: 10px;
 `;
-const TurnText = styled.Text``;
-const RollCountText = styled.Text``;
+
+const RollCountText = styled.Text`
+  text-align: right;
+`;
 
 const ButtonContainer = styled.View`
   flex: 1;
@@ -166,6 +132,7 @@ const ButtonContainer = styled.View`
   margin-vertical: 20px;
   margin-horizontal: 10px;
 `;
+// visibility: ${(props) => (props.isTurn ? "visible " : "hidden")};
 
 const Button = styled.TouchableOpacity`
   flex: 1;
@@ -179,3 +146,4 @@ const Button = styled.TouchableOpacity`
 `;
 
 const ButtonText = styled.Text``;
+// background-color: white;
