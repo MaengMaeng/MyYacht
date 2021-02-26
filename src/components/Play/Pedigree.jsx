@@ -15,6 +15,7 @@ import {
   dice5,
   dice6,
 } from "../../../assets/play";
+import * as pc from "../../PedigreeCalculator";
 
 const IMAGES = {
   Aces: dice1,
@@ -44,6 +45,8 @@ export default function ({
   holdabled,
   holdPedigreeHandler,
   hold,
+  dices,
+  rollCount,
 }) {
   return (
     <Container>
@@ -61,10 +64,21 @@ export default function ({
         hold={hold && isTurn}
         yellow
       >
-        <ScoreText> {myScore} </ScoreText>
+        {!myScore && rollCount !== 0 && isTurn ? (
+          <>
+            {console.log(rollCount)}
+            <ScoreText gray> {pc.calculate(title, dices)} </ScoreText>
+          </>
+        ) : (
+          <ScoreText> {myScore} </ScoreText>
+        )}
       </ScoreContainer>
       <ScoreContainer disabled={true} hold={hold && !isTurn}>
-        <ScoreText> {rivalScore} </ScoreText>
+        {!rivalScore && rollCount !== 0 && !isTurn ? (
+          <ScoreText gray> {pc.calculate(title, dices)} </ScoreText>
+        ) : (
+          <ScoreText> {rivalScore} </ScoreText>
+        )}
       </ScoreContainer>
     </Container>
   );
@@ -108,8 +122,7 @@ const ScoreContainer = styled.TouchableOpacity`
 `;
 
 const ScoreText = styled.Text`
-  color: gray;
-
+  color: ${(props) => (props.gray ? "gray" : "")};
   font-size: 15px;
   font-weight: bold;
 `;

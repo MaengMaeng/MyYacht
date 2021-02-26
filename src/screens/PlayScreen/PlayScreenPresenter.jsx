@@ -26,9 +26,11 @@ export default function ({
               title={title}
               myScore={myScore[title]}
               rivalScore={rivalScore[title]}
-              holdabled={isTurn && rollCount !== 0}
+              holdabled={isTurn && rollCount !== 0 && !myScore[title]}
               holdPedigreeHandler={holdPedigreeHandler}
               hold={title === holdPedigreeTitle}
+              dices={dices}
+              rollCount={rollCount}
             />
           ))}
           <TotalContainer>
@@ -44,9 +46,11 @@ export default function ({
               title={title}
               myScore={myScore[title]}
               rivalScore={rivalScore[title]}
-              holdabled={isTurn && rollCount !== 0}
+              holdabled={isTurn && rollCount !== 0 && !myScore[title]}
               holdPedigreeHandler={holdPedigreeHandler}
               hold={title === holdPedigreeTitle}
+              rollCount={rollCount}
+              dices={dices}
             />
           ))}
           <TotalContainer>

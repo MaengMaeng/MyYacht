@@ -16,7 +16,7 @@ export default function () {
     false,
     false,
   ]);
-  const [dices, setDices] = useState([1, 2, 3, 4, 5]);
+  const [dices, setDices] = useState([]);
   const [myScore, setMyScore] = useState({});
   const [rivalScore, setRivalScore] = useState({});
   const [rollCount, setRollCount] = useState(0);
@@ -63,22 +63,22 @@ export default function () {
     socket.on("rollDices", (data) => {
       setDices(data);
       // 족보 계산값
-      const counts = pc.makeCountArray(data);
-      const calculatedData = {
-        Aces: pc.calSingle(counts, 1),
-        Duces: pc.calSingle(counts, 2),
-        Threes: pc.calSingle(counts, 3),
-        Fours: pc.calSingle(counts, 4),
-        Fives: pc.calSingle(counts, 5),
-        Sixes: pc.calSingle(counts, 6),
-        Choice: pc.calSum(counts),
-        "4 Of a Kind": pc.cal4OfAKind(counts),
-        "Full House": pc.calFullHouse(counts),
-        "Small Straight": pc.calSmallStraight(counts),
-        "Large Straight": pc.calLargeStraight(counts),
-        Yacht: pc.calYatch(counts),
-      };
-      setMyScore(calculatedData);
+      // const counts = pc.makeCountArray(data);
+      // const calculatedData = {
+      //   Aces: pc.calSingle(counts, 1),
+      //   Duces: pc.calSingle(counts, 2),
+      //   Threes: pc.calSingle(counts, 3),
+      //   Fours: pc.calSingle(counts, 4),
+      //   Fives: pc.calSingle(counts, 5),
+      //   Sixes: pc.calSingle(counts, 6),
+      //   Choice: pc.calSum(counts),
+      //   "4 Of a Kind": pc.cal4OfAKind(counts),
+      //   "Full House": pc.calFullHouse(counts),
+      //   "Small Straight": pc.calSmallStraight(counts),
+      //   "Large Straight": pc.calLargeStraight(counts),
+      //   Yacht: pc.calYatch(counts),
+      // };
+      // setMyScore(calculatedData);
     });
     socket.on("countRolls", (data) => {
       setRollCount(data);
@@ -93,6 +93,14 @@ export default function () {
 
     socket.on("submit", (data) => {
       setIsTurn(data);
+    });
+
+    socket.on("updateScore", (score, isMine) => {
+      if (isMine) {
+        setMyScore(score);
+      } else {
+        setRivalScore(score);
+      }
     });
 
     // WillUnmount
