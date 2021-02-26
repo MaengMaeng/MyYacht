@@ -65,10 +65,7 @@ export default function ({
         yellow
       >
         {!myScore && rollCount !== 0 && isTurn ? (
-          <>
-            {console.log(rollCount)}
-            <ScoreText gray> {pc.calculate(title, dices)} </ScoreText>
-          </>
+          <ScoreText gray> {pc.calculate(title, dices)} </ScoreText>
         ) : (
           <ScoreText> {myScore} </ScoreText>
         )}
