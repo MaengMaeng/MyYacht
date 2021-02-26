@@ -15,6 +15,7 @@ import {
   dice5,
   dice6,
 } from "../../../assets/play";
+import * as pc from "../../PedigreeCalculator";
 
 const IMAGES = {
   Aces: dice1,
@@ -36,7 +37,19 @@ const getImage = (title) => {
   return IMAGES[title];
 };
 
-export default function ({ title, myScore, rivalScore, onLongPress, onPressOut }) {
+export default function ({
+  title,
+  myScore,
+  rivalScore,
+  isTurn,
+  holdabled,
+  holdPedigreeHandler,
+  hold,
+  dices,
+  rollCount,
+  onLongPress,
+  onPressOut,
+}) {
   return (
     <Container>
       <DiceContainer onPressIn={onLongPress} onPressOut={onPressOut}>
@@ -47,10 +60,25 @@ export default function ({ title, myScore, rivalScore, onLongPress, onPressOut }
           <Text>{title}</Text>
         </TextContainer>
       </DiceContainer>
-      <MyScore>
-        <MyScoreText>{myScore}</MyScoreText>
-      </MyScore>
-      <RivalScore>{rivalScore}</RivalScore>
+      <ScoreContainer
+        disabled={!holdabled}
+        onPress={() => holdPedigreeHandler(title)}
+        hold={hold && isTurn}
+        yellow
+      >
+        {!myScore && rollCount !== 0 && isTurn ? (
+          <ScoreText gray> {pc.calculate(title, dices)} </ScoreText>
+        ) : (
+          <ScoreText> {myScore} </ScoreText>
+        )}
+      </ScoreContainer>
+      <ScoreContainer disabled={true} hold={hold && !isTurn}>
+        {!rivalScore && rollCount !== 0 && !isTurn ? (
+          <ScoreText gray> {pc.calculate(title, dices)} </ScoreText>
+        ) : (
+          <ScoreText> {rivalScore} </ScoreText>
+        )}
+      </ScoreContainer>
     </Container>
   );
 }
@@ -59,12 +87,12 @@ const Container = styled.View`
   flex: 1;
   flex-direction: row;
   margin-vertical: 1px;
+  border-width: 1px;
 `;
 const DiceContainer = styled.TouchableOpacity`
   flex: 2;
   flex-direction: row;
   justify-content: flex-start;
-  border-width: 1px;
 `;
 const ImageContainer = styled.View`
   align-items: center;
@@ -84,22 +112,16 @@ const TextContainer = styled.View`
 const Text = styled.Text`
   font-size: 13px;
 `;
-const MyScore = styled.View`
+const ScoreContainer = styled.TouchableOpacity`
   flex: 1;
-  border-width: 1px;
-  background-color: #ffc000;
+  border-width: ${(props) => (props.hold ? "2px" : "0px")};
+  background-color: ${(props) => (props.yellow ? "#ffc000" : "white")};
   justify-content: center;
   align-items: center;
 `;
 
-const MyScoreText = styled.Text`
-  color: gray;
-
+const ScoreText = styled.Text`
+  color: ${(props) => (props.gray ? "gray" : "black")};
   font-size: 15px;
   font-weight: bold;
-`;
-
-const RivalScore = styled.View`
-  flex: 1;
-  border-width: 1px;
 `;

@@ -4,9 +4,10 @@ import { BackHandler, StatusBar } from "react-native";
 import { socket, connectSocket } from "../../socket";
 import PlayScreenPresenter from "./PlayScreenPresenter";
 import { Matching } from "../../components/Matching/Matching";
+import * as pc from "../../PedigreeCalculator";
 
 export default function () {
-  const [isMatched, setIsMatched] = useState(true);
+  const [isMatched, setIsMatched] = useState(false);
   const [isTurn, setIsTurn] = useState(false);
   const [holdDices, setHoldDices] = useState([
     false,
@@ -15,20 +16,21 @@ export default function () {
     false,
     false,
   ]);
-  const [dices, setDices] = useState([1, 2, 3, 4, 5]);
+  const [dices, setDices] = useState([]);
   const [myScore, setMyScore] = useState({});
+  const [rivalScore, setRivalScore] = useState({});
   const [rollCount, setRollCount] = useState(0);
+  const [holdPedigreeTitle, setHoldPedigreeTitle] = useState("");
   const [lVisible, setLVisible] = useState(false);
   const [lPTitle, setLPTitle] = useState(null);
   const [rVisible, setRVisible] = useState(false);
   const [rPTitle, setRPTitle] = useState(null);
 
   const setProps = (left, visible, title) => {
-    if(left){
+    if (left) {
       setLVisible(visible);
       setLPTitle(title);
-    }
-    else{
+    } else {
       setRVisible(visible);
       setRPTitle(title);
     }
@@ -42,13 +44,12 @@ export default function () {
   };
 
   const rollHandler = () => {
-    const data = new Object();
-    data.dices = dices;
-    data.holddDices = holdDices;
-    data.rollCount = rollCount;
-    socket.emit("roll", data);
+    socket.emit("roll", holdDices);
   };
 
+  const holdPedigreeHandler = (title) => {
+    socket.emit("holdPedigree", title);
+  };
   const submitHandler = () => {
     socket.emit("submit");
   };
@@ -68,29 +69,36 @@ export default function () {
 
     socket.emit("matching");
 
-    socket.on("hold", (data) => {
-      setHoldDices(data);
-    });
-
     socket.on("matched", (data) => {
       setIsMatched(true);
     });
 
-    socket.on("pre_calcurate", (data) => {
-      setMyScore(data);
-    });
-
-    // roll dices
-    socket.on("roll", (data) => {
+    // roll
+    socket.on("rollDices", (data) => {
       setDices(data);
+      // 족보 계산값
+    });
+    socket.on("countRolls", (data) => {
+      setRollCount(data);
     });
 
-    socket.on("roll_count", (data) => {
-      setRollCount(data);
+    socket.on("hold", (data) => {
+      setHoldDices(data);
+    });
+    socket.on("holdPedigree", (data) => {
+      setHoldPedigreeTitle(data);
     });
 
     socket.on("submit", (data) => {
       setIsTurn(data);
+    });
+
+    socket.on("updateScore", (score, isMine) => {
+      if (isMine) {
+        setMyScore(score);
+      } else {
+        setRivalScore(score);
+      }
     });
 
     // WillUnmount
@@ -108,17 +116,20 @@ export default function () {
         {...{
           isTurn,
           dices,
-          holdDices,
-          emitHoldDices,
-          rollHandler,
           rollCount,
           myScore,
+          rivalScore,
+          holdDices,
+          holdPedigreeTitle,
+          holdPedigreeHandler,
+          rollHandler,
+          emitHoldDices,
           submitHandler,
           lVisible,
           rVisible,
           lPTitle,
           rPTitle,
-          setProps
+          setProps,
         }}
       />
     );
