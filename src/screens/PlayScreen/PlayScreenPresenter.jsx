@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components/native";
 import { Pedigree, Total, Dice } from "../../components/Play";
 import { leftPedigreeTitles, rightPedigreeTitles } from "./PedigreeTitle";
+import PedigreeInfo from "./PedigreeInfo";
+
 export default function ({
   isTurn,
   dices,
@@ -11,26 +13,52 @@ export default function ({
   rollCount,
   myScore,
   submitHandler,
+  lVisible,
+  rVisible,
+  lPTitle,
+  rPTitle,
+  setProps
 }) {
+
+
   return (
     <Container>
       <PedigreeContainer>
         <PedigreeList>
           {leftPedigreeTitles.map((title, index) => (
-            <Pedigree key={index} title={title} myScore={myScore[title]} />
+            <Pedigree
+              key={index}
+              title={title}
+              myScore={myScore[title]}
+              onLongPress={() => setProps(false, true, title)}
+              onPressOut={() => setProps(false, false, null)}
+            />
           ))}
           <TotalContainer>
             <Total title="Bonus" myScore="2" rivalScore="50" />
           </TotalContainer>
+          <PedigreeInfo
+            {...{ visible: lVisible, title: lPTitle }}
+          ></PedigreeInfo>
         </PedigreeList>
 
         <PedigreeList>
           {rightPedigreeTitles.map((title, index) => (
-            <Pedigree key={index} title={title} myScore={myScore[title]} />
+            <Pedigree
+              key={index}
+              title={title}
+              myScore={myScore[title]}
+              onLongPress={() => setProps(true, true, title)}
+              onPressOut={() => setProps(true, false, null)}
+            />
           ))}
           <TotalContainer>
             <Total title="Total" myScore="133" rivalScore="350" />
           </TotalContainer>
+
+          <PedigreeInfo
+            {...{ visible: rVisible, title: rPTitle }}
+          ></PedigreeInfo>
         </PedigreeList>
       </PedigreeContainer>
       <RollCountContainer>
