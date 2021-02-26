@@ -4,6 +4,7 @@ import { BackHandler, StatusBar } from "react-native";
 import { socket, connectSocket } from "../../socket";
 import PlayScreenPresenter from "./PlayScreenPresenter";
 import { Matching } from "../../components/Matching/Matching";
+import * as pc from "../../PedigreeCalculator";
 
 export default function () {
   const [isMatched, setIsMatched] = useState(false);
@@ -29,11 +30,7 @@ export default function () {
   };
 
   const rollHandler = () => {
-    const data = new Object();
-    data.dices = dices;
-    data.holddDices = holdDices;
-    data.rollCount = rollCount;
-    socket.emit("roll", data);
+    socket.emit("roll", holdDices);
   };
 
   const holdPedigreeHandler = (title) => {
@@ -65,15 +62,26 @@ export default function () {
     // roll
     socket.on("rollDices", (data) => {
       setDices(data);
+      // 족보 계산값
+      const counts = pc.makeCountArray(data);
+      const calculatedData = {
+        Aces: pc.calSingle(counts, 1),
+        Duces: pc.calSingle(counts, 2),
+        Threes: pc.calSingle(counts, 3),
+        Fours: pc.calSingle(counts, 4),
+        Fives: pc.calSingle(counts, 5),
+        Sixes: pc.calSingle(counts, 6),
+        Choice: pc.calSum(counts),
+        "4 Of a Kind": pc.cal4OfAKind(counts),
+        "Full House": pc.calFullHouse(counts),
+        "Small Straight": pc.calSmallStraight(counts),
+        "Large Straight": pc.calLargeStraight(counts),
+        Yacht: pc.calYatch(counts),
+      };
+      setMyScore(calculatedData);
     });
     socket.on("countRolls", (data) => {
       setRollCount(data);
-    });
-    socket.on("preCalculateMyScore", (data) => {
-      setMyScore(data);
-    });
-    socket.on("preCalculateRivalScore", (data) => {
-      setRivalScore(data);
     });
 
     socket.on("hold", (data) => {
