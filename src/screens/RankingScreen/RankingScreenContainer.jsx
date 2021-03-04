@@ -1,15 +1,15 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { RankingScreen } from "./RankingScreenPresenter";
+import RankingScreenPresenter from "./RankingScreenPresenter";
 
 import {
   TOTAL_RANKING,
   MY_TOTAL_RANKING,
   FRIENDS_RANKING,
   MY_FRIENDS_RANKING,
-} from "./ranking_dummy";
+} from "../../dummies/ranking_dummy";
 
-export const RankingScreenContainer = () => {
+export default function () {
   const [tabNumber, setTabNumber] = useState(0);
   const [ranklist, setRanklist] = useState([]);
   const defaultMyRank = {
@@ -42,5 +42,7 @@ export const RankingScreenContainer = () => {
     }
   };
 
-  return <RankingScreen {...{ tabNumber, ranklist, myRank, changeTab }} />;
-};
+  return (
+    <RankingScreenPresenter {...{ tabNumber, ranklist, myRank, changeTab }} />
+  );
+}

@@ -1,9 +1,7 @@
 import React from "react";
 import styled from "styled-components/native";
 
-import { Text } from "react-native";
-
-export const RankingScreen = ({ tabNumber, myRank, ranklist, changeTab }) => {
+export default function ({ tabNumber, myRank, ranklist, changeTab }) {
   const rankParser = ["1st", "2nd", "3rd"];
 
   const userInfo = (rank, nickname, uid) => {
@@ -50,14 +48,14 @@ export const RankingScreen = ({ tabNumber, myRank, ranklist, changeTab }) => {
       </RankingListView>
       <Container direction="column">
         <DividerView>
-          <Text>내 랭킹</Text>
+          <DividerText>내 랭킹</DividerText>
           <DividerLineView />
         </DividerView>
         {userInfo(myRank.rank, myRank.nickname, myRank.uid)}
       </Container>
     </>
   );
-};
+}
 
 const Container = styled.View`
   flex: 1;
@@ -133,3 +131,5 @@ const DividerLineView = styled.View`
   height: 1px;
   width: 300px;
 `;
+
+const DividerText = styled.Text``;

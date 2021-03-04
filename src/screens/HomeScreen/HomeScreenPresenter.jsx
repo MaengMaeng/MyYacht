@@ -1,27 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
+import { Dimensions } from "react-native";
 import styled from "styled-components/native";
+
 import {
   PRACTICE_ICON,
   AI_ICON,
   NORMAL_ICON,
   RANK_ICON,
 } from "../../../assets/home";
-import { Dimensions } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-
-import { userInfo } from "../../components/UserInfoModal/dummy";
 import { UserInfoModal } from "../../components/UserInfoModal/UserInfoModal";
 
 const { width } = Dimensions.get("window");
 
-export default function () {
-  const [modalVisible, setModalVisible] = useState(false);
-  const navigation = useNavigation();
-
-  const navigateMatching = () => {
-    navigation.push("Play");
-  };
-
+export default function ({
+  userInfo,
+  modalVisible,
+  setModalVisible,
+  navigateMatching,
+}) {
   return (
     <ContainerView>
       <UserInfoModal

@@ -1,1 +1,3 @@
-export { default as HomeScreen } from "./HomeScreen";
+import HomeScreenContainer from "./HomeScreenContainer";
+
+export default HomeScreenContainer;

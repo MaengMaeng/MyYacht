@@ -3,8 +3,8 @@ import { Platform } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 
-import { RankingScreen } from "../screens/RankingScreen";
-import { HomeScreen } from "../screens/HomeScreen";
+import RankingScreen from "../screens/RankingScreen";
+import HomeScreen from "../screens/HomeScreen";
 import FriendsScreen from "../screens/FriendsScreen";
 
 const Tabs = createBottomTabNavigator();

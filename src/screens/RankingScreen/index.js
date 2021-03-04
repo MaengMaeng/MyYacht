@@ -1,1 +1,3 @@
-export { RankingScreenContainer as RankingScreen } from "./RankingScreenContainer";
+import RankingScreenContainer from "./RankingScreenContainer";
+
+export default RankingScreenContainer;
