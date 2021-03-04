@@ -8,7 +8,7 @@ import {
   NORMAL_ICON,
   RANK_ICON,
 } from "../../../assets/home";
-import { UserInfoModal } from "../../components/UserInfoModal/UserInfoModal";
+import { UserInfoModal } from "../../components/Home";
 
 const { width } = Dimensions.get("window");
 
