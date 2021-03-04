@@ -20,10 +20,8 @@ export default function ({
       />
       <ListContainer>
         {tabNumber ? (
-          // 신청받은 목록
           <FriendsList friendsList={friendsRequestList} tabNumber={tabNumber} />
         ) : (
-          // 친구 목록
           <FriendsList friendsList={friendsList} tabNumber={tabNumber} />
         )}
       </ListContainer>

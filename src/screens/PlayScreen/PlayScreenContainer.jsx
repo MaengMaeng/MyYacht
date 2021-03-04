@@ -4,7 +4,6 @@ import { BackHandler, StatusBar } from "react-native";
 import { socket, connectSocket } from "../../socket";
 import PlayScreenPresenter from "./PlayScreenPresenter";
 import { Matching } from "../../components/Matching/Matching";
-import * as pc from "../../PedigreeCalculator";
 
 export default function () {
   const [isMatched, setIsMatched] = useState(false);
@@ -60,7 +59,6 @@ export default function () {
 
   useEffect(() => {
     BackHandler.addEventListener("hardwareBackPress", backAction);
-    // status bar hidden
     StatusBar.setHidden(true);
 
     if (!socket) {
@@ -73,11 +71,10 @@ export default function () {
       setIsMatched(true);
     });
 
-    // roll
     socket.on("rollDices", (data) => {
       setDices(data);
-      // 족보 계산값
     });
+
     socket.on("countRolls", (data) => {
       setRollCount(data);
     });
@@ -85,6 +82,7 @@ export default function () {
     socket.on("hold", (data) => {
       setHoldDices(data);
     });
+
     socket.on("holdPedigree", (data) => {
       setHoldPedigreeTitle(data);
     });
@@ -101,7 +99,6 @@ export default function () {
       }
     });
 
-    // WillUnmount
     return () => {
       BackHandler.removeEventListener("hardwareBackPress", backAction);
       StatusBar.setHidden(false);

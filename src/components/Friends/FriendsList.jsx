@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Dimensions } from "react-native";
+import { Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
 
@@ -7,7 +7,6 @@ import Button from "./Button";
 import Profile from "./Profile";
 
 const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
-// 200 = 고정값 (Header + TopTab + BottomTab)
 const newHeight = HEIGHT - 200;
 
 export default function ({ friendsList, tabNumber }) {
@@ -57,8 +56,9 @@ export default function ({ friendsList, tabNumber }) {
 }
 
 const Container = styled.ScrollView`
-  height: ${newHeight};
+  height: ${newHeight}px;
 `;
+
 const ItemContainer = styled.View`
   display: flex;
   padding: 10px;
@@ -67,6 +67,7 @@ const ItemContainer = styled.View`
   align-items: center;
   height: 60px;
 `;
+
 const LeftContainer = styled.View`
   flex: 4;
 `;
