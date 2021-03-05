@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components/native";
-import { getImage } from "../../utils/images";
+import { getImage } from "@utils/images";
 
 export default function ({ disabled, value, hold, onPress }) {
   return (

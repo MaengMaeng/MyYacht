@@ -1,4 +1,4 @@
-import { IMAGES } from "../constants/images";
+import { IMAGES } from "@constants/images";
 
 const getImage = (num, title) => {
   if (num != null) {

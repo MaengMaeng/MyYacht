@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components/native";
 import { Modal, Dimensions } from "react-native";
 
-import USER_ICON from "../../../assets/user.png";
+import USER_ICON from "@assets/user.png";
 import Info from "./Info";
 
 const { width } = Dimensions.get("window");

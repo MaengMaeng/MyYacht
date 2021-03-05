@@ -7,7 +7,7 @@ import {
   MY_TOTAL_RANKING,
   FRIENDS_RANKING,
   MY_FRIENDS_RANKING,
-} from "../../dummies/ranking_dummy";
+} from "@dummies/rankingDummy";
 
 export default function () {
   const [tabNumber, setTabNumber] = useState(0);

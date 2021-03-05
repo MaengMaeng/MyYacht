@@ -11,7 +11,7 @@ import {
   dice4,
   dice5,
   dice6,
-} from "../../assets/play";
+} from "@assets/play";
 
 const IMAGES = {
   image1: dice1,

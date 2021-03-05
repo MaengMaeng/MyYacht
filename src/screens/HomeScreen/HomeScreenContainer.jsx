@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
-import { userInfo } from "../../dummies/userinfo_dummy";
+import { userInfo } from "@dummies/userInfoDummy";
 import HomeScreenPresenter from "./HomeScreenPresenter";
 
 export default function () {
