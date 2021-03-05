@@ -1,45 +1,12 @@
 import React from "react";
 import styled from "styled-components/native";
+import { getImage } from "../../utils/images";
+
 import {
   PedigreeInfos,
   PedigreeDiceExample,
   PedigreeExample,
-} from "./PedigreeTitle";
-
-import {
-  diamond,
-  clover,
-  home,
-  stairs,
-  stairsbox,
-  pentagon,
-  dice1,
-  dice2,
-  dice3,
-  dice4,
-  dice5,
-  dice6,
-} from "../../../assets/play";
-
-const IMAGES = {
-  Aces: dice1,
-  Duces: dice2,
-  Threes: dice3,
-  Fours: dice4,
-  Fives: dice5,
-  Sixes: dice6,
-
-  Choice: diamond,
-  "4 Of a Kind": clover,
-  "Full House": home,
-  "Small Straight": stairs,
-  "Large Straight": stairsbox,
-  Yacht: pentagon,
-};
-
-const getImage = (title) => {
-  return IMAGES[title];
-};
+} from "../../constants/pedigree";
 
 const Example = (index, title) => {
   return (
@@ -54,12 +21,12 @@ const Example = (index, title) => {
 };
 
 export default function ({ visible, title }) {
-  if (visible) {
+  if (visible && title) {
     return (
       <Container>
         <TitleView>
           <ImageContainer>
-            <Image source={getImage(title)} />
+            <Image source={getImage(null, title)} />
           </ImageContainer>
           <TextContainer>
             <Text>{title}</Text>
@@ -70,7 +37,6 @@ export default function ({ visible, title }) {
         </InfoView>
         {Example(0, title)}
         {Example(1, title)}
-        
       </Container>
     );
   } else {
@@ -100,7 +66,7 @@ const TitleView = styled.View`
 `;
 
 const InfoView = styled.View`
-  flex-grow:1;
+  flex-grow: 1;
   width: 100%;
 
   align-items: center;

@@ -62,6 +62,7 @@ const PedigreeExample = {
   "Large Straight": ["= 30점", "= 40점"],
   Yacht: ["= 50점", "= 50점"],
 };
+
 export {
   leftPedigreeTitles,
   rightPedigreeTitles,

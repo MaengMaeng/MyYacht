@@ -96,4 +96,5 @@ const dummy = [
     rank_score: "1759",
   },
 ];
-export default dummy;
+
+export { dummy };

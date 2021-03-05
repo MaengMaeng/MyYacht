@@ -1,19 +1,6 @@
 import React from "react";
 import styled from "styled-components/native";
-import { dice1, dice2, dice3, dice4, dice5, dice6 } from "../../../assets/play";
-
-const IMAGES = {
-  image1: dice1,
-  image2: dice2,
-  image3: dice3,
-  image4: dice4,
-  image5: dice5,
-  image6: dice6,
-};
-
-const getImage = (num) => {
-  return IMAGES["image" + num];
-};
+import { getImage } from "../../utils/images";
 
 export default function ({ disabled, value, hold, onPress }) {
   return (

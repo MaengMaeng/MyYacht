@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components/native";
 import { Pedigree, Total, Dice } from "../../components/Play";
-import { leftPedigreeTitles, rightPedigreeTitles } from "./PedigreeTitle";
-import PedigreeInfo from "./PedigreeInfo";
+import { leftPedigreeTitles, rightPedigreeTitles } from "../../constants/pedigree";
+import PedigreeInfo from "../../components/Play/PedigreeInfo";
 
 export default function ({
   isTurn,
@@ -124,19 +124,23 @@ const Container = styled.View`
   flex: 1;
   background-color: white;
 `;
+
 const PedigreeContainer = styled.View`
   flex: 9;
   flex-direction: row;
   margin-vertical: 20px;
 `;
+
 const PedigreeList = styled.View`
   flex: 1;
   margin-horizontal: 10px;
 `;
+
 const TotalContainer = styled.View`
   flex: 1.5;
   margin-top: 10px;
 `;
+
 const DiceContainer = styled.View`
   flex: 2;
   flex-direction: row;
@@ -157,7 +161,9 @@ const TextContainer = styled.View`
   justify-content: space-between;
   margin-horizontal: 10px;
 `;
+
 const TurnText = styled.Text``;
+
 const RollCountText = styled.Text``;
 
 const ButtonContainer = styled.View`
