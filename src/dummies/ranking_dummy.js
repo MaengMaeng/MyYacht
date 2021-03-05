@@ -1,4 +1,4 @@
-export const TOTAL_RANKING = [
+const TOTAL_RANKING = [
   {
     nickname: "더미_1",
     uid: "1234",
@@ -73,13 +73,13 @@ export const TOTAL_RANKING = [
   },
 ];
 
-export const MY_TOTAL_RANKING = {
+const MY_TOTAL_RANKING = {
   rank: 121233,
   nickname: "내닉네임",
   uid: "8664654",
 };
 
-export const FRIENDS_RANKING = [
+const FRIENDS_RANKING = [
   {
     nickname: "더미_9",
     uid: "1234",
@@ -122,8 +122,10 @@ export const FRIENDS_RANKING = [
   },
 ];
 
-export const MY_FRIENDS_RANKING = {
+const MY_FRIENDS_RANKING = {
   rank: 456,
   nickname: "내닉네임",
   uid: "8664654",
 };
+
+export { TOTAL_RANKING, MY_TOTAL_RANKING, FRIENDS_RANKING, MY_FRIENDS_RANKING };
