@@ -7,6 +7,7 @@ import Button from "./Button";
 import Profile from "./Profile";
 
 const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
+// 200 = 고정값 (Header + TopTab + BottomTab)
 const newHeight = HEIGHT - 200;
 
 export default function ({ friendsList, tabNumber }) {
