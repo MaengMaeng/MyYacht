@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components/native";
-import { getImage } from "../../utils/images";
-import { calculate } from "../../utils/pedigreeCalculator";
+import { getImage } from "@utils/images";
+import { calculate } from "@utils/pedigreeCalculator";
 
 export default function ({
   title,

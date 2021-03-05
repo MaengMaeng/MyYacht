@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components/native";
-import { Pedigree, Total, Dice } from "../../components/Play";
-import { leftPedigreeTitles, rightPedigreeTitles } from "../../constants/pedigree";
-import PedigreeInfo from "../../components/Play/PedigreeInfo";
+import { Pedigree, Total, Dice } from "@components/Play";
+import { leftPedigreeTitles, rightPedigreeTitles } from "@constants/pedigree";
+import PedigreeInfo from "@components/Play/PedigreeInfo";
 
 export default function ({
   isTurn,

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { BackHandler, StatusBar } from "react-native";
 
-import { socket, connectSocket } from "../../socket";
+import { socket, connectSocket } from "@/socket";
 import PlayScreenPresenter from "./PlayScreenPresenter";
-import { Matching } from "../../components/Matching/Matching";
+import { Matching } from "@components/Matching/Matching";
 
 export default function () {
-  const [isMatched, setIsMatched] = useState(false);
+  const [isMatched, setIsMatched] = useState(true);
   const [isTurn, setIsTurn] = useState(false);
   const [holdDices, setHoldDices] = useState([
     false,

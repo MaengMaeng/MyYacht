@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components/native";
 
-import FriendsList from "../../components/Friends/FriendsList";
-import Tab from "../../components/Friends/Tab";
+import FriendsList from "@components/Friends/FriendsList";
+import Tab from "@components/Friends/Tab";
 
 export default function ({
   tabNumber,

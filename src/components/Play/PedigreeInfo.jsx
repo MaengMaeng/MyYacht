@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components/native";
-import { getImage } from "../../utils/images";
+import { getImage } from "@utils/images";
 
 import {
   PedigreeInfos,
   PedigreeDiceExample,
   PedigreeExample,
-} from "../../constants/pedigree";
+} from "@constants/pedigree";
 
 const Example = (index, title) => {
   return (

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import FriendsScreenPresenter from "./FriendsScreenPresenter";
-import { dummy } from "../../dummies/friends";
+import { dummy } from "@dummies/friendsDummy";
 
 export default function () {
   const [tabNumber, setTabNumber] = useState(0);
