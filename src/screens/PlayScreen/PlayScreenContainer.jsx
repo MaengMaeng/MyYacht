@@ -6,8 +6,16 @@ import PlayScreenPresenter from "./PlayScreenPresenter";
 import { Matching } from "@components/Matching/Matching";
 
 export default function () {
-  const [isMatched, setIsMatched] = useState(true);
-  const [isTurn, setIsTurn] = useState(false);
+  const [game, setGame] = useState({
+    isTurn: false,
+    score: {},
+    dices: [],
+    holdPedigree: "",
+    rollCount: 0,
+    turnCount: 0,
+  });
+  const [isMatched, setIsMatched] = useState(false);
+  // const [isTurn, setIsTurn] = useState(false);
   const [holdDices, setHoldDices] = useState([
     false,
     false,
@@ -15,10 +23,10 @@ export default function () {
     false,
     false,
   ]);
-  const [dices, setDices] = useState([]);
+  // const [dices, setDices] = useState([]);
   const [myScore, setMyScore] = useState({});
   const [rivalScore, setRivalScore] = useState({});
-  const [rollCount, setRollCount] = useState(0);
+  // const [rollCount, setRollCount] = useState(0);
   const [holdPedigreeTitle, setHoldPedigreeTitle] = useState("");
   const [lVisible, setLVisible] = useState(false);
   const [lPTitle, setLPTitle] = useState(null);
@@ -71,12 +79,17 @@ export default function () {
       setIsMatched(true);
     });
 
-    socket.on("rollDices", (data) => {
-      setDices(data);
-    });
+    // socket.on("rollDices", (data) => {
+    //   setDices(data);
+    // });
 
-    socket.on("countRolls", (data) => {
-      setRollCount(data);
+    // socket.on("countRolls", (data) => {
+    //   setRollCount(data);
+    // });
+
+    socket.on("roll", (data) => {
+      setGame(data);
+      console.log(game);
     });
 
     socket.on("hold", (data) => {
@@ -88,7 +101,8 @@ export default function () {
     });
 
     socket.on("submit", (data) => {
-      setIsTurn(data);
+      setGame({ ...game, isTurn: data });
+      // setIsTurn(data);
     });
 
     socket.on("updateScore", (score, isMine) => {
@@ -111,9 +125,10 @@ export default function () {
     return (
       <PlayScreenPresenter
         {...{
-          isTurn,
-          dices,
-          rollCount,
+          game,
+          // isTurn,
+          // dices,
+          // rollCount,
           myScore,
           rivalScore,
           holdDices,

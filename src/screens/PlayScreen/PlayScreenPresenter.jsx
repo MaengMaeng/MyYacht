@@ -5,9 +5,10 @@ import { leftPedigreeTitles, rightPedigreeTitles } from "@constants/pedigree";
 import PedigreeInfo from "@components/Play/PedigreeInfo";
 
 export default function ({
-  isTurn,
-  dices,
-  rollCount,
+  game,
+  // isTurn,
+  // dices,
+  // rollCount,
   myScore,
   rivalScore,
   holdDices,
@@ -29,15 +30,15 @@ export default function ({
           {leftPedigreeTitles.map((title, index) => (
             <Pedigree
               key={index}
-              isTurn={isTurn}
+              isTurn={game.isTurn}
               title={title}
               myScore={myScore[title]}
               rivalScore={rivalScore[title]}
-              holdabled={isTurn && rollCount !== 0 && !myScore[title]}
+              holdabled={game.isTurn && game.rollCount !== 0 && !myScore[title]}
               holdPedigreeHandler={holdPedigreeHandler}
               hold={title === holdPedigreeTitle}
-              dices={dices}
-              rollCount={rollCount}
+              // dices={dices}
+              rollCount={game.rollCount}
               onLongPress={() => setProps(false, true, title)}
               onPressOut={() => setProps(false, false, null)}
             />
@@ -54,15 +55,15 @@ export default function ({
           {rightPedigreeTitles.map((title, index) => (
             <Pedigree
               key={index}
-              isTurn={isTurn}
+              isTurn={game.isTurn}
               title={title}
               myScore={myScore[title]}
               rivalScore={rivalScore[title]}
-              holdabled={isTurn && rollCount !== 0 && !myScore[title]}
+              holdabled={game.isTurn && game.rollCount !== 0 && !myScore[title]}
               holdPedigreeHandler={holdPedigreeHandler}
               hold={title === holdPedigreeTitle}
-              rollCount={rollCount}
-              dices={dices}
+              rollCount={game.rollCount}
+              // dices={dices}
               onLongPress={() => setProps(true, true, title)}
               onPressOut={() => setProps(true, false, null)}
             />
@@ -77,21 +78,21 @@ export default function ({
         </PedigreeList>
       </PedigreeContainer>
       <TextContainer>
-        <TurnText> {isTurn ? "내 차례" : "상대 차례"} </TurnText>
-        <RollCountText> {3 - rollCount} remains </RollCountText>
+        <TurnText> {game.isTurn ? "내 차례" : "상대 차례"} </TurnText>
+        <RollCountText> {3 - game.rollCount} remains </RollCountText>
       </TextContainer>
       <DiceContainer>
-        {rollCount === 0 ? (
+        {game.rollCount === 0 ? (
           <>
             <DiceText>
-              {isTurn ? "주사위를 굴려주세요" : "상대 차례입니다"}
+              {game.isTurn ? "주사위를 굴려주세요" : "상대 차례입니다"}
             </DiceText>
           </>
         ) : (
           <>
-            {dices.map((value, index) => (
+            {game.dices.map((value, index) => (
               <Dice
-                disabled={!isTurn || rollCount === 0}
+                disabled={!game.isTurn || game.rollCount === 0}
                 key={index}
                 hold={holdDices[index]}
                 value={value}
@@ -102,12 +103,15 @@ export default function ({
         )}
       </DiceContainer>
       <ButtonContainer>
-        <Button disabled={!isTurn || rollCount === 3} onPress={rollHandler}>
+        <Button
+          disabled={!game.isTurn || game.rollCount === 3}
+          onPress={rollHandler}
+        >
           <ButtonText>Roll</ButtonText>
         </Button>
-        {rollCount !== 0 ? (
+        {game.rollCount !== 0 ? (
           <Button
-            disabled={!isTurn || holdPedigreeTitle === ""}
+            disabled={!game.isTurn || holdPedigreeTitle === ""}
             onPress={submitHandler}
           >
             <ButtonText>Submit</ButtonText>
