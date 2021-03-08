@@ -28,7 +28,7 @@ export default function ({
       </DiceContainer>
       <ScoreContainer
         disabled={!holdabled}
-        onPress={() => holdPedigreeHandler(null, title)}
+        onPress={() => holdPedigreeHandler(title)}
         hold={hold && isTurn}
         yellow
       >
