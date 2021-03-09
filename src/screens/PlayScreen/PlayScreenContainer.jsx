@@ -4,6 +4,7 @@ import { BackHandler, StatusBar } from "react-native";
 import { socket, connectSocket } from "@/socket";
 import PlayScreenPresenter from "./PlayScreenPresenter";
 import { Matching } from "@components/Matching/Matching";
+import * as _ from "lodash";
 
 export default function () {
   const [game, setGame] = useState({
@@ -88,7 +89,27 @@ export default function () {
     // });
 
     socket.on("roll", (data) => {
-      setGame(data);
+      // this.setState(prevState => ({
+      //   food: {
+      //     ...prevState.food,           // copy all other key-value pairs of food object
+      //     pizza: {                     // specific object of food object
+      //       ...prevState.food.pizza,   // copy all pizza key-value pairs
+      //       extraCheese: true          // update value of specific key
+      //     }
+      //   }
+      // }))
+
+      const temp = _.cloneDeep(game);
+      temp.dices = data.dices;
+      temp.rollCount = data.rollCount;
+      console.log(temp);
+
+      setGame(temp);
+
+      // console.log(data);
+      // console.log(dices);
+      // console.log(rollCount);
+      // setGame({ ...game, dices, rollCount });
       console.log(game);
     });
 
@@ -100,8 +121,14 @@ export default function () {
       setHoldPedigreeTitle(data);
     });
 
-    socket.on("submit", (data) => {
-      setGame({ ...game, isTurn: data });
+    socket.on("submit", (turnData) => {
+      const temp = _.cloneDeep(game);
+      temp.isTurn = turnData;
+      console.log(temp);
+      // setGame({ ...game, isTurn: turnData });
+      setGame(temp);
+
+      console.log(game);
       // setIsTurn(data);
     });
 
